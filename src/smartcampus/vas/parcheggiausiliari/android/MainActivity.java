@@ -3,10 +3,10 @@ package smartcampus.vas.parcheggiausiliari.android;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -21,27 +21,33 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
-import eu.trentorise.smartcampus.osm.android.views.MapView;
-import eu.trentorise.smartcampus.osm.android.views.overlay.MyLocationOverlay;
 import eu.trentorise.smartcampus.osm.android.views.overlay.OverlayItem;
 
 public class MainActivity extends ActionBarActivity {
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
-	private ArrayList<OverlayItem> pList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
-	private CharSequence mDrawerTitle;
+	
+	private int current = 0;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(savedInstanceState != null)
+        	current = savedInstanceState.getInt("current");
         
-        mDrawerToggle = new ActionBarDrawerToggle(
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    	//to remove the application logo in the drawer Title
+        getSupportActionBar().setIcon(new ColorDrawable(android.R.color.transparent));
+    	getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    	getSupportActionBar().setHomeButtonEnabled(true);
+    	
+    	
+        /**		Used to open the Drawer by clicking the actionBar											         */
+    	mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
                 R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
@@ -52,48 +58,108 @@ public class MainActivity extends ActionBarActivity {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setIcon(R.drawable.ic_drawer);
-                getActionBar().setTitle(mTitle);
+            	supportInvalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("open");
+                getSupportActionBar().setTitle(mTitle);
+            	supportInvalidateOptionsMenu();
             }
         };
+        
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        
+        /**															
+        *
+        */
         
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         String[] strings = {"Mappa","Storico","Logout"};
         mDrawerList.setAdapter(new MySimpleArrayAdapter(getApplicationContext(), strings));
+        
         mDrawerList.setOnItemClickListener(new OnItemClickListener(){
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), Activity2.class);
-				startActivity(i);
+				if(arg2 != current)
+				if(arg2 == 0){
+					//getSupportFragmentManager().beginTransaction().replace(R.id.container, new MapFragment(getApplicationContext())).commit();
+					//Animazione
+					getSupportActionBar().setTitle("Mappa");
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+					ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+
+					MapFragment newFragment = new MapFragment();
+
+					ft.replace(R.id.container, newFragment);
+
+					// Start the animated transition.
+					ft.commit();
+				
+				}else if(arg2 == 1){
+					getSupportActionBar().setTitle("Storico");
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+					ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+
+					StoricoFragment newFragment = new StoricoFragment();
+
+					ft.replace(R.id.container, newFragment);
+
+					// Start the animated transition.
+					ft.commit();
+					
+					//getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlaceholderFragment(getApplicationContext())).commit();
+					}
+				else
+				{
+					getSupportActionBar().setTitle("Login");
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+					ft.setCustomAnimations(R.anim.enter, R.anim.exit);
+
+					Fragment_prova newFragment = new Fragment_prova();
+
+					ft.replace(R.id.container, newFragment);
+
+					// Start the animated transition.
+					ft.commit();
+				}
+				mDrawerLayout.closeDrawer(mDrawerList);
+				current = arg2;
 			}
 		});
-        mTitle = mDrawerTitle = getTitle();
         
-        
-        
-        MapView map = (MapView) findViewById(R.id.mapview);
-        map.setMultiTouchControls(true);
-        map.setMinZoomLevel(3);
-        MyLocationOverlay myLoc = new MyLocationOverlay(getApplicationContext(), map);
-        myLoc.enableCompass();
-        map.getOverlays().add(myLoc);
-        GPSTracker pos = new GPSTracker(getApplicationContext());
-		map.getController().setZoom(18);
-		map.getController().animateTo(new GeoPoint(pos.getLatitude(), pos.getLongitude()));
+        mTitle = getTitle();
 		
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new MapFragment())
+                    .commit();
+        }
 	}
 
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		outState.putInt("current", current);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onRestoreInstanceState(savedInstanceState);
+	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
@@ -110,6 +176,22 @@ public class MainActivity extends ActionBarActivity {
 	    return super.onKeyDown(keyCode, e);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -119,37 +201,8 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-    	
-        public PlaceholderFragment(Context mContext) {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            
-        	View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-            
-        }
-    }
-    
-    public class MySimpleArrayAdapter extends ArrayAdapter<String> {
+    public static class MySimpleArrayAdapter extends ArrayAdapter<String> {
     	  private final Context context;
     	  private final String[] values;
 
@@ -161,16 +214,14 @@ public class MainActivity extends ActionBarActivity {
 
     	  @Override
     	  public View getView(int position, View convertView, ViewGroup parent) {
-    	    LayoutInflater inflater = (LayoutInflater) context
-    	        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	    View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
-    	    TextView textView = (TextView) rowView.findViewById(R.id.textView1);
-    	    ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-    	    textView.setText(values[position]);
+    		  	LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		  	View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+    		  	TextView textView = (TextView) rowView.findViewById(R.id.textView1);
+    		  	ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+    		  	textView.setText(values[position]);
 
     	    return rowView;
     	  }
     	} 
     
 }
-
