@@ -2,6 +2,13 @@ package smartcampus.vas.parcheggiausiliari.android;
 
 import java.util.ArrayList;
 
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
+import org.osmdroid.views.overlay.MyLocationOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
+
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
@@ -15,14 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import eu.trentorise.smartcampus.osm.android.api.IGeoPoint;
-import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
-import eu.trentorise.smartcampus.osm.android.util.OSMGeocoding;
-import eu.trentorise.smartcampus.osm.android.views.MapView;
-import eu.trentorise.smartcampus.osm.android.views.overlay.ClusteredOverlay;
-import eu.trentorise.smartcampus.osm.android.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
-import eu.trentorise.smartcampus.osm.android.views.overlay.MyLocationOverlay;
-import eu.trentorise.smartcampus.osm.android.views.overlay.OverlayItem;
 
 public class MapFragment extends Fragment {
 
@@ -119,20 +118,20 @@ public class MapFragment extends Fragment {
 			items.add(item);
 		}
 		
-		map.addMarkers(items , new OnItemGestureListener<OverlayItem>() {
-			
-			@Override
-			public boolean onItemLongPress(int arg0, OverlayItem arg1) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) {
-				showPopup(map, arg1.getTitle());
-				return true;
-			}
-		});
+//		map.addMarkers(items , new OnItemGestureListener<OverlayItem>() {
+//			
+//			@Override
+//			public boolean onItemLongPress(int arg0, OverlayItem arg1) {
+//				// TODO Auto-generated method stub
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) {
+//				showPopup(map, arg1.getTitle());
+//				return true;
+//			}
+//		});
 		
 		
 		return rootView;

@@ -2,20 +2,20 @@ package smartcampus.vas.parcheggiausiliari.android;
 
 import java.util.ArrayList;
 
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import eu.trentorise.smartcampus.osm.android.DefaultResourceProxyImpl;
-import eu.trentorise.smartcampus.osm.android.ResourceProxy;
-import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
-import eu.trentorise.smartcampus.osm.android.views.MapView;
-import eu.trentorise.smartcampus.osm.android.views.MapView.Projection;
-import eu.trentorise.smartcampus.osm.android.views.overlay.Overlay;
 
-public class MyPathOverlay extends Overlay {
+public class MyPathOverlay extends org.osmdroid.views.overlay.Overlay {
 	// ===========================================================
 	// Constants
 	// ===========================================================

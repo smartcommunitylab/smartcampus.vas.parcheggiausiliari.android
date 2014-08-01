@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
+import org.osmdroid.util.GeoPoint;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 public class AusiliariHelper {
 	private static Context mContext;

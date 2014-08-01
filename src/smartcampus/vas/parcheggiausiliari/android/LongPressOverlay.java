@@ -1,11 +1,12 @@
 package smartcampus.vas.parcheggiausiliari.android;
 
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.view.MotionEvent;
-import eu.trentorise.smartcampus.osm.android.views.MapView;
-import eu.trentorise.smartcampus.osm.android.views.overlay.Overlay;
 
 public class LongPressOverlay extends Overlay
 {
