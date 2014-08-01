@@ -2,25 +2,27 @@ package smartcampus.vas.parcheggiausiliari.android;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
 public class Fragment_prova extends Fragment {
-
-	public Fragment_prova() {
-		// TODO Auto-generated constructor stub
-	}
+	private PagerSlidingTabStrip tabs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         
     	View rootView = inflater.inflate(R.layout.fragment_prova, container, false);
-    
-    	WebView wv = (WebView)rootView.findViewById(R.id.webView1);
-    	wv.loadUrl("https://accounts.google.com/ServiceLogin");
+    	ViewPager pager = (ViewPager) rootView.findViewById(R.id.pager);
+    	tabs = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabs);
+    	pager.setAdapter(new MyPagerAdapter(getFragmentManager()));
+    	// Bind the tabs to the ViewPager
+    	tabs.setViewPager(pager);
     	return rootView;
         
     }
@@ -29,4 +31,36 @@ public class Fragment_prova extends Fragment {
     	// TODO Auto-generated method stub
     	super.onSaveInstanceState(outState);
     }
+    
+    public class MyPagerAdapter extends FragmentPagerAdapter {
+
+		private final String[] TITLES = { "Segnala", "Storico"};
+
+		public MyPagerAdapter(FragmentManager fm) {
+			super(fm);
+			
+			if(getCount()<= 3)
+				tabs.setShouldExpand(true);
+			
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return TITLES[position];
+		}
+
+		@Override
+		public int getCount() {
+			return TITLES.length;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			if(position == 0)
+				return new StoricoFragment();
+			else
+				return new ParkListFragment();
+		}
+
+	}
 }

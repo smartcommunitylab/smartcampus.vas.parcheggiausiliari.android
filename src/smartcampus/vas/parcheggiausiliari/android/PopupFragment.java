@@ -37,7 +37,7 @@ public class PopupFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_dialog, container, false);
+		View v = inflater.inflate(R.layout.popup_street, container, false);
 		TextView tv = (TextView) v.findViewById(R.id.txtMessage);
 		tv.setText(message);
 		Button btnStorico = (Button) v.findViewById(R.id.btnStorico);

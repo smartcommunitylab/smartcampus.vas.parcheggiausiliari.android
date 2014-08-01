@@ -91,7 +91,6 @@ public class MyPathOverlay extends Overlay {
 
         addGreatCircle(startPoint, endPoint, numberOfPoints);
 	}
-
 	/**
 	 * Draw a great circle.
 	 * @param startPoint start point of the great circle

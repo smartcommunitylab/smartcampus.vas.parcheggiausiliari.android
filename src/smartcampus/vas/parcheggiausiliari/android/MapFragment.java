@@ -1,6 +1,7 @@
 package smartcampus.vas.parcheggiausiliari.android;
 
-import android.content.res.Resources;
+import java.util.ArrayList;
+
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
@@ -18,7 +19,10 @@ import eu.trentorise.smartcampus.osm.android.api.IGeoPoint;
 import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
 import eu.trentorise.smartcampus.osm.android.util.OSMGeocoding;
 import eu.trentorise.smartcampus.osm.android.views.MapView;
+import eu.trentorise.smartcampus.osm.android.views.overlay.ClusteredOverlay;
+import eu.trentorise.smartcampus.osm.android.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
 import eu.trentorise.smartcampus.osm.android.views.overlay.MyLocationOverlay;
+import eu.trentorise.smartcampus.osm.android.views.overlay.OverlayItem;
 
 public class MapFragment extends Fragment {
 
@@ -98,6 +102,7 @@ public class MapFragment extends Fragment {
 			}
 		});
 		map.invalidate();
+		
 		MyPathOverlay p = new MyPathOverlay(Color.argb(128, 128, 0, 128),
 				getActivity());
 		p.getPaint().setStyle(Style.FILL);
@@ -105,6 +110,31 @@ public class MapFragment extends Fragment {
 			p.addPoint(pt);
 		}
 		map.getOverlays().add(p);
+		
+		
+		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		for (GeoPoint pt : AusiliariHelper.Parks()) {
+			OverlayItem item = new OverlayItem("PARK1", "Description", pt );
+			item.setMarker(getResources().getDrawable(R.drawable.marker_poi_generic));
+			items.add(item);
+		}
+		
+		map.addMarkers(items , new OnItemGestureListener<OverlayItem>() {
+			
+			@Override
+			public boolean onItemLongPress(int arg0, OverlayItem arg1) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) {
+				showPopup(map, arg1.getTitle());
+				return true;
+			}
+		});
+		
+		
 		return rootView;
 	}
 

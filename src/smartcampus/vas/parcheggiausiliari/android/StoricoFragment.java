@@ -1,6 +1,5 @@
 package smartcampus.vas.parcheggiausiliari.android;
 
-import eu.trentorise.smartcampus.osm.android.util.GeoPoint;
 import smartcampus.vas.parcheggiausiliari.android.MainActivity.MySimpleArrayAdapter;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
