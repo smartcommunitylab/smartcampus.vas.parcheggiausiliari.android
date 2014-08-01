@@ -13,5 +13,14 @@
     <string name="action_example">Example action</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">closed</string>
+    <string name="title_activity_park_list_fragment">ParkListFragment</string>
+    <string name= "drawer_mappa">Mappa</string>
+    <string name= "drawer_storico">Storico</string>
+    <string name= "drawer_logout">Logout</string>
+    <string name= "storico_fragment">Storico</string>
+    <string name= "map_fragment">Mappa</string>
+    <string name= "parklist_fragment">Parkings</string>
+    <string name= "streetlist_fragment">Vie</string>
+    <string name= "login_fragment">Login</string>
 
 </resources>
