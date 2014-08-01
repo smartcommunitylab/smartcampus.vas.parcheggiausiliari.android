@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="smartcampus.vas.parcheggiausiliari.android.MainActivity$PlaceholderFragment" >
 
-    <eu.trentorise.smartcampus.osm.android.views.MapView
+    <org.osmdroid.views.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="0dp"

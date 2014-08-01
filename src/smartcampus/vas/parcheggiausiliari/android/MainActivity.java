@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -105,9 +104,9 @@ public class MainActivity extends ActionBarActivity {
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
 						Fragment a;
-						/*if ((a = getSupportFragmentManager().findFragmentByTag(
+						if ((a = getSupportFragmentManager().findFragmentByTag(
 								getString(R.string.map_fragment))) != null)
-							ft.remove(a);*/
+							ft.remove(a);
 						ft.replace(R.id.container, new MapFragment(),
 								getString(R.string.map_fragment))
 								.addToBackStack(null).commit();
@@ -116,10 +115,10 @@ public class MainActivity extends ActionBarActivity {
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-						/*Fragment a;
+						Fragment a;
 						if ((a = getSupportFragmentManager().findFragmentByTag(
 								getString(R.string.storico_fragment))) != null)
-							ft.remove(a);*/
+							ft.remove(a);
 						ft.replace(R.id.container, new StoricoFragment(),
 								getString(R.string.storico_fragment))
 								.addToBackStack(null).commit();
@@ -128,10 +127,10 @@ public class MainActivity extends ActionBarActivity {
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-						/*Fragment a;
+						Fragment a;
 						if ((a = getSupportFragmentManager().findFragmentByTag(
 								getString(R.string.login_fragment))) != null)
-							ft.remove(a);*/
+							ft.remove(a);
 						ft.replace(R.id.container, new Fragment_prova(),
 								getString(R.string.login_fragment))
 								.addToBackStack(null).commit();

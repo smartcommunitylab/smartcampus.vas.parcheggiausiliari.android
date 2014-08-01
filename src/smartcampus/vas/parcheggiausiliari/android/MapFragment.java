@@ -6,6 +6,7 @@ import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
@@ -132,7 +133,20 @@ public class MapFragment extends Fragment {
 //				return true;
 //			}
 //		});
-		
+		map.getOverlays().add(new ItemizedOverlayWithFocus<OverlayItem>(items , new OnItemGestureListener<OverlayItem>() {
+			
+			@Override
+			public boolean onItemLongPress(int arg0, OverlayItem arg1) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean onItemSingleTapUp(int arg0, OverlayItem arg1) {
+				showPopup(map, arg1.getTitle());
+				return true;
+			}
+		},map.getResourceProxy()));
 		
 		return rootView;
 	}
