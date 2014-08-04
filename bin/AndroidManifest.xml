@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="smartcampus.vas.parcheggiausiliari.android.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             android:label="@string/title_activity_activity2" >
         </activity>
         <activity
-            android:name=".ParkListFragment"
+            android:name="smartcampus.vas.parcheggiausiliari.android.activity.ParkListFragment"
             android:label="@string/title_activity_park_list_fragment"
             android:parentActivityName="android.support.v4.app.FragmentActivity" >
             <meta-data
