@@ -1,6 +1,8 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.activity;
 
-import smartcampus.vas.parcheggiausiliari.android.MainActivity.MySimpleArrayAdapter;
+import smartcampus.vas.parcheggiausiliari.android.R;
+import smartcampus.vas.parcheggiausiliari.android.activity.MainActivity.MySimpleArrayAdapter;
+import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.util;
 
 import android.app.AlertDialog;
 import android.content.Context;

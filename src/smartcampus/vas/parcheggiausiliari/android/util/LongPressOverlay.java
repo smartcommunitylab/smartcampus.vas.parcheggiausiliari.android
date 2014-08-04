@@ -1,4 +1,4 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.util;
 
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;

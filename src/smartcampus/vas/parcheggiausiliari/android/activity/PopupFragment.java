@@ -1,5 +1,6 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.activity;
 
+import smartcampus.vas.parcheggiausiliari.android.R;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -53,7 +54,7 @@ public class PopupFragment extends DialogFragment {
 				if ((a = getFragmentManager().findFragmentByTag(
 						getString(R.string.storico_fragment))) != null)
 					ft.remove(a);*/
-				ft.replace(R.id.container, new StoricoFragment(),
+				ft.replace(R.id.container, new StreetDetailsFragment(),
 						getString(R.string.storico_fragment))
 						.addToBackStack(null).commit();
 				dismiss();

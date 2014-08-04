@@ -1,5 +1,7 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.activity;
 
+import smartcampus.vas.parcheggiausiliari.android.R;
+import smartcampus.vas.parcheggiausiliari.android.views.PagerSlidingTabStrip;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

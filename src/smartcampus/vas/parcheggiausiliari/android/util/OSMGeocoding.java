@@ -1,4 +1,4 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class OSMGeocoding {
 		}
 		@Override
 		protected List<Address> doInBackground(GeoPoint... params) {
-			GeocoderNominatim myGeocoder = new GeocoderNominatim(mContext,Locale.getDefault());
+			GeocoderNominatim myGeocoder = new GeocoderNominatim(mContext,Locale.ITALY);
 			List<Address> address = null;
 			try {
 				address = myGeocoder.getFromLocation(params[0].getLatitudeE6()/1E6, params[0].getLongitudeE6()/1E6, 5);

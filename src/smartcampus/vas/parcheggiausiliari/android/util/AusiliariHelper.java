@@ -1,4 +1,4 @@
-package smartcampus.vas.parcheggiausiliari.android;
+package smartcampus.vas.parcheggiausiliari.android.util;
 
 
 import java.util.ArrayList;
