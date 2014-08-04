@@ -37,8 +37,8 @@ public class PopupFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.popup_street, container, false);
-		TextView tv = (TextView) v.findViewById(R.id.txtMessage);
+		View v = inflater.inflate(R.layout.popup_fragment, container, false);
+		TextView tv = (TextView) v.findViewById(R.id.txtLastData);
 		tv.setText(message);
 		Button btnStorico = (Button) v.findViewById(R.id.btnStorico);
 		btnStorico.setOnClickListener(new OnClickListener() {
@@ -57,6 +57,15 @@ public class PopupFragment extends DialogFragment {
 				ft.replace(R.id.container, new StreetDetailsFragment(),
 						getString(R.string.storico_fragment))
 						.addToBackStack(null).commit();
+				dismiss();
+			}
+		});
+		Button btnAnnulla = (Button) v.findViewById(R.id.btnDel);
+		btnAnnulla.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				dismiss();
 			}
 		});

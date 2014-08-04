@@ -109,7 +109,7 @@ public class MapFragment extends Fragment {
 							 * "Lat: " + (point.getLatitudeE6() / 10E5) +
 							 * " ,  Lon: " + (point.getLongitudeE6() / 10E5));
 							 */
-						OSMGeocoding
+						"VIA",OSMGeocoding
 								.FromPointToAddress(
 										new GeoPoint(point.getLatitudeE6(),
 												point.getLongitudeE6()),
@@ -126,7 +126,7 @@ public class MapFragment extends Fragment {
 
 		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
 		for (GeoPoint pt : AusiliariHelper.Parks()) {
-			OverlayItem item = new OverlayItem("PARK1", "Description", pt);
+			OverlayItem item = new OverlayItem("Park "+pt.getAltitude(), "14 / 07 / 2014 alle 17.16 \n da Mario Rossi", pt);
 			item.setMarker(getResources().getDrawable(
 					R.drawable.marker_poi_generic));
 			items.add(item);
@@ -146,7 +146,7 @@ public class MapFragment extends Fragment {
 							@Override
 							public boolean onItemSingleTapUp(int arg0,
 									OverlayItem arg1) {
-								showPopup(map, arg1.getTitle());
+								showPopup(map,arg1.getTitle(), arg1.getSnippet());
 								return true;
 							}
 						}, map.getResourceProxy()));
@@ -155,10 +155,11 @@ public class MapFragment extends Fragment {
 		return rootView;
 	}
 
-	public void showPopup(View anchorView, String text) {
-		DialogFragment df = PopupFragment.newInstance("Parcheggio Zuffo", text);
+	public void showPopup(View anchorView, String title, String lastData) {
+		DialogFragment df = PopupFragment.newInstance(title, lastData);
 		df.show(getFragmentManager(), getTag());
 	}
+	
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

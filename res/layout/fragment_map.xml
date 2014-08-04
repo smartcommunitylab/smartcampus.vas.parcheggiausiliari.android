@@ -21,15 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" 
-            android:drawableTop="@drawable/parking"/>
+            android:text="@string/btnParkings"/>
 
         <Button
             android:id="@+id/btnVie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/street_icon" />
+            android:layout_weight="1" 
+            android:text="@string/btnStreets"/>
 
     </LinearLayout>
 

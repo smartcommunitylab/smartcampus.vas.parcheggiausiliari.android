@@ -12,8 +12,8 @@ public class LongPressOverlay extends Overlay
 {
 	long time = 0;
 	float x, y;
-	final float deltaX = 10;
-	final float deltaY = 10;
+	final float deltaX = 25;
+	final float deltaY = 25;
 	public Context mContext;
 	public MapView mapView;
 
@@ -35,7 +35,7 @@ public class LongPressOverlay extends Overlay
 			x = event.getX();
 			y = event.getY();
 		}
-		else if(event.getAction() == MotionEvent.ACTION_UP && (System.currentTimeMillis() - time >= 1000)&& event.getPointerCount() == 1)
+		else if(event.getAction() == MotionEvent.ACTION_UP && (System.currentTimeMillis() - time >= 700)&& event.getPointerCount() == 1)
 		{
 			if((Math.abs(event.getX() - x) <= deltaX) && (Math.abs(event.getY() - y) <= deltaY))
 			{

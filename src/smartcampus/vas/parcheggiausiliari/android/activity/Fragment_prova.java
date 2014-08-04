@@ -25,8 +25,8 @@ public class Fragment_prova extends Fragment {
     	// Bind the tabs to the ViewPager
     	tabs.setViewPager(pager);
     	return rootView;
-        
     }
+    
     @Override
     public void onSaveInstanceState(Bundle outState) {
     	// TODO Auto-generated method stub

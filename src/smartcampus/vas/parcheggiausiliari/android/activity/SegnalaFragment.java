@@ -1,25 +1,22 @@
 package smartcampus.vas.parcheggiausiliari.android.activity;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
-import smartcampus.vas.parcheggiausiliari.android.views.PagerSlidingTabStrip;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 public class SegnalaFragment extends Fragment {
-	private PagerSlidingTabStrip tabs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         
-    	View rootView = inflater.inflate(R.layout.fragment_segnala, container, false);
-    	
+    	View rootView = inflater.inflate(R.layout.fragment_streetdetails, container, false);
     	return rootView;
         
     }

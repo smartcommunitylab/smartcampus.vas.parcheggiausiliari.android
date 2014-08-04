@@ -18,6 +18,7 @@ package smartcampus.vas.parcheggiausiliari.android.views;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +57,7 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
     public interface Formatter {
         String toString(int value);
     }
-
+    
     /*
      * Use a custom NumberPicker formatting callback to use two-digit
      * minutes strings like "01".  Keeping a static formatter etc. is the
@@ -98,8 +100,9 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
     protected int mPrevious;
     private OnChangedListener mListener;
     private Formatter mFormatter;
-    private long mSpeed = 300;
-
+    private long mSpeed = 200;
+    private Context mContext;
+    
     private boolean mIncrement;
     private boolean mDecrement;
 
@@ -114,6 +117,7 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
     @SuppressWarnings({"UnusedDeclaration"})
     public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs);
+        mContext = context;
         setOrientation(VERTICAL);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.number_picker, this, true);
@@ -224,9 +228,9 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
 
         // Wrap around the values if we go past the start or end
         if (current > mEnd) {
-            current = mStart;
-        } else if (current < mStart) {
             current = mEnd;
+        } else if (current < mStart) {
+            current = mStart;
         }
         mPrevious = mCurrent;
         mCurrent = current;

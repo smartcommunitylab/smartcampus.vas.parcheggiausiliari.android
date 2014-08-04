@@ -305,8 +305,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			scrollTo(newScrollX, 0);
 		}
 
-	}
-
+	}	
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);

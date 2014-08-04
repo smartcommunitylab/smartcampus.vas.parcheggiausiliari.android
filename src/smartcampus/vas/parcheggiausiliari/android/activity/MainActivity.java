@@ -188,11 +188,6 @@ public class MainActivity extends ActionBarActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
@@ -203,7 +198,6 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
         menu.setGroupVisible(0, false);
         return true;
     }
@@ -229,7 +223,7 @@ public class MainActivity extends ActionBarActivity {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
-			TextView textView = (TextView) rowView.findViewById(R.id.textView1);
+			TextView textView = (TextView) rowView.findViewById(R.id.txt1);
 			textView.setText(values.get(position));
 
 			return rowView;
