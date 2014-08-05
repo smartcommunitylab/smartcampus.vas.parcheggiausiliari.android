@@ -1,17 +1,19 @@
 package smartcampus.vas.parcheggiausiliari.android.activity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import smartcampus.vas.parcheggiausiliari.android.R;
-import smartcampus.vas.parcheggiausiliari.android.activity.MainActivity.MySimpleArrayAdapter;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class StoricoFragment extends Fragment {
 	ListView lv;
@@ -33,7 +35,6 @@ public class StoricoFragment extends Fragment {
 		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(getActivity(),
 				new AusiliariHelper(getActivity()).getStorico());
 		lv.setAdapter(adapter);
-		lv.setOnItemClickListener(new onClickEvent());
 	}
 
 	@Override
@@ -42,32 +43,31 @@ public class StoricoFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 	}
 
-	private class onClickEvent implements OnItemClickListener {
+	public static class MySimpleArrayAdapter extends ArrayAdapter<String> {
+		private final Context context;
+		private final ArrayList<String> values;
 
-		public onClickEvent() {
-			// TODO Auto-generated constructor stub
+		public MySimpleArrayAdapter(Context context, ArrayList<String> values) {
+			super(context, R.layout.rowlayout, values);
+			this.context = context;
+			this.values = values;
 		}
 
-		public void showPopup() {
-
-			/*Fragment a;
-			if ((a = getFragmentManager().findFragmentByTag(
-					getString(R.string.map_fragment))) != null)
-				getFragmentManager().beginTransaction().remove(a);*/
-			getFragmentManager()
-					.beginTransaction()
-					.replace(R.id.container, new MapFragment(),
-							getString(R.string.map_fragment))
-					.addToBackStack(null).commit();
-			DialogFragment df = PopupFragment.newInstance("PROVA", "message");
-			df.show(getFragmentManager(), "");
+		public MySimpleArrayAdapter(Context context, String[] values) {
+			super(context, R.layout.rowlayout, values);
+			this.context = context;
+			this.values = new ArrayList<String>(Arrays.asList(values));
 		}
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			// TODO Auto-generated method stub
-			showPopup();
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+			TextView textView = (TextView) rowView.findViewById(R.id.txt1);
+			textView.setText(values.get(position));
+
+			return rowView;
 		}
 	}
 }

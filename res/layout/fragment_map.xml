@@ -20,17 +20,16 @@
             android:id="@+id/btnParking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" 
-            android:text="@string/btnParkings"/>
+            android:layout_weight="1"
+            android:text="@string/btnParkings" />
 
         <Button
             android:id="@+id/btnVie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1" 
-            android:text="@string/btnStreets"/>
-
+            android:layout_weight="1"
+            android:text="@string/btnStreets" />
     </LinearLayout>
 
 </LinearLayout>

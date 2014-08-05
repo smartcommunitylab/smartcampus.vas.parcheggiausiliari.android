@@ -18,7 +18,6 @@ package smartcampus.vas.parcheggiausiliari.android.views;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -30,401 +29,410 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnLongClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * This class has been pulled from the Android platform source code, its an internal widget that hasn't been
- * made public so its included in the project in this fashion for use with the preferences screen; I have made
- * a few slight modifications to the code here, I simply put a MAX and MIN default in the code but these values
- * can still be set publically by calling code.
- *
+ * This class has been pulled from the Android platform source code, its an
+ * internal widget that hasn't been made public so its included in the project
+ * in this fashion for use with the preferences screen; I have made a few slight
+ * modifications to the code here, I simply put a MAX and MIN default in the
+ * code but these values can still be set publically by calling code.
+ * 
  * @author Google
  */
 public class NumberPicker extends LinearLayout implements OnClickListener,
-        OnFocusChangeListener, OnLongClickListener {
+		OnFocusChangeListener, OnLongClickListener {
 
-    private static final String TAG = "NumberPicker";
-    private static final int DEFAULT_MAX = 200;
-    private static final int DEFAULT_MIN = 0;
+	private static final String TAG = "NumberPicker";
+	private static final int DEFAULT_MAX = Integer.MAX_VALUE;
+	private static final int DEFAULT_MIN = 0;
 
-    public interface OnChangedListener {
-        void onChanged(NumberPicker picker, int oldVal, int newVal);
-    }
+	public interface OnChangedListener {
+		void onChanged(NumberPicker picker, int oldVal, int newVal);
+	}
 
-    public interface Formatter {
-        String toString(int value);
-    }
-    
-    /*
-     * Use a custom NumberPicker formatting callback to use two-digit
-     * minutes strings like "01".  Keeping a static formatter etc. is the
-     * most efficient way to do this; it avoids creating temporary objects
-     * on every call to format().
-     */
-    public static final NumberPicker.Formatter TWO_DIGIT_FORMATTER =
-            new NumberPicker.Formatter() {
-                final StringBuilder mBuilder = new StringBuilder();
-                final java.util.Formatter mFmt = new java.util.Formatter(mBuilder);
-                final Object[] mArgs = new Object[1];
-                public String toString(int value) {
-                    mArgs[0] = value;
-                    mBuilder.delete(0, mBuilder.length());
-                    mFmt.format("%02d", mArgs);
-                    return mFmt.toString();
-                }
-        };
+	public interface Formatter {
+		String toString(int value);
+	}
 
-    private final Handler mHandler;
-    private final Runnable mRunnable = new Runnable() {
-        public void run() {
-            if (mIncrement) {
-                changeCurrent(mCurrent + 1);
-                mHandler.postDelayed(this, mSpeed);
-            } else if (mDecrement) {
-                changeCurrent(mCurrent - 1);
-                mHandler.postDelayed(this, mSpeed);
-            }
-        }
-    };
+	/*
+	 * Use a custom NumberPicker formatting callback to use two-digit minutes
+	 * strings like "01". Keeping a static formatter etc. is the most efficient
+	 * way to do this; it avoids creating temporary objects on every call to
+	 * format().
+	 */
+	public static final NumberPicker.Formatter TWO_DIGIT_FORMATTER = new NumberPicker.Formatter() {
+		final StringBuilder mBuilder = new StringBuilder();
+		final java.util.Formatter mFmt = new java.util.Formatter(mBuilder);
+		final Object[] mArgs = new Object[1];
 
-    private final EditText mText;
-    private final InputFilter mNumberInputFilter;
+		public String toString(int value) {
+			mArgs[0] = value;
+			mBuilder.delete(0, mBuilder.length());
+			mFmt.format("%02d", mArgs);
+			return mFmt.toString();
+		}
+	};
 
-    private String[] mDisplayedValues;
-    protected int mStart;
-    protected int mEnd;
-    protected int mCurrent;
-    protected int mPrevious;
-    private OnChangedListener mListener;
-    private Formatter mFormatter;
-    private long mSpeed = 200;
-    private Context mContext;
-    
-    private boolean mIncrement;
-    private boolean mDecrement;
+	private final Handler mHandler;
+	private final Runnable mRunnable = new Runnable() {
+		public void run() {
+			if (mIncrement) {
+				changeCurrent(mCurrent + 1);
+				mHandler.postDelayed(this, mSpeed);
+			} else if (mDecrement) {
+				changeCurrent(mCurrent - 1);
+				mHandler.postDelayed(this, mSpeed);
+			}
+		}
+	};
 
-    public NumberPicker(Context context) {
-        this(context, null);
-    }
+	private final EditText mText;
+	private final InputFilter mNumberInputFilter;
 
-    public NumberPicker(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	private String[] mDisplayedValues;
+	protected int mStart;
+	protected int mEnd;
+	protected int mCurrent;
+	protected int mPrevious;
+	private OnChangedListener mListener;
+	private Formatter mFormatter;
+	private long mSpeed = 200;
+	private Context mContext;
 
-    @SuppressWarnings({"UnusedDeclaration"})
-    public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
-        mContext = context;
-        setOrientation(VERTICAL);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.number_picker, this, true);
-        mHandler = new Handler();
-        InputFilter inputFilter = new NumberPickerInputFilter();
-        mNumberInputFilter = new NumberRangeKeyListener();
-        mIncrementButton = (NumberPickerButton) findViewById(R.id.increment);
-        mIncrementButton.setOnClickListener(this);
-        mIncrementButton.setOnLongClickListener(this);
-        mIncrementButton.setNumberPicker(this);
-        mDecrementButton = (NumberPickerButton) findViewById(R.id.decrement);
-        mDecrementButton.setOnClickListener(this);
-        mDecrementButton.setOnLongClickListener(this);
-        mDecrementButton.setNumberPicker(this);
+	private boolean mIncrement;
+	private boolean mDecrement;
 
-        mText = (EditText) findViewById(R.id.timepicker_input);
-        mText.setOnFocusChangeListener(this);
-        mText.setFilters(new InputFilter[] {inputFilter});
-        mText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+	public NumberPicker(Context context) {
+		this(context, null);
+	}
 
-        if (!isEnabled()) {
-            setEnabled(false);
-        }
+	public NumberPicker(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
 
-        mStart = DEFAULT_MIN;
-        mEnd = DEFAULT_MAX;
-    }
+	@SuppressWarnings({ "UnusedDeclaration" })
+	public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs);
+		mContext = context;
+		setOrientation(VERTICAL);
+		LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater.inflate(R.layout.number_picker, this, true);
+		mHandler = new Handler();
+		InputFilter inputFilter = new NumberPickerInputFilter();
+		mNumberInputFilter = new NumberRangeKeyListener();
+		mIncrementButton = (NumberPickerButton) findViewById(R.id.increment);
+		mIncrementButton.setOnClickListener(this);
+		mIncrementButton.setOnLongClickListener(this);
+		mIncrementButton.setNumberPicker(this);
+		mDecrementButton = (NumberPickerButton) findViewById(R.id.decrement);
+		mDecrementButton.setOnClickListener(this);
+		mDecrementButton.setOnLongClickListener(this);
+		mDecrementButton.setNumberPicker(this);
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        mIncrementButton.setEnabled(enabled);
-        mDecrementButton.setEnabled(enabled);
-        mText.setEnabled(enabled);
-    }
+		mText = (EditText) findViewById(R.id.timepicker_input);
+		mText.setOnFocusChangeListener(this);
+		mText.setFilters(new InputFilter[] { inputFilter });
+		mText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
-    public void setOnChangeListener(OnChangedListener listener) {
-        mListener = listener;
-    }
+		if (!isEnabled()) {
+			setEnabled(false);
+		}
 
-    public void setFormatter(Formatter formatter) {
-        mFormatter = formatter;
-    }
+		mStart = DEFAULT_MIN;
+		mEnd = DEFAULT_MAX;
+	}
 
-    /**
-     * Set the range of numbers allowed for the number picker. The current
-     * value will be automatically set to the start.
-     *
-     * @param start the start of the range (inclusive)
-     * @param end the end of the range (inclusive)
-     */
-    public void setRange(int start, int end) {
-        mStart = start;
-        mEnd = end;
-        mCurrent = start;
-        updateView();
-    }
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		mIncrementButton.setEnabled(enabled);
+		mDecrementButton.setEnabled(enabled);
+		mText.setEnabled(enabled);
+	}
 
-    /**
-     * Set the range of numbers allowed for the number picker. The current
-     * value will be automatically set to the start. Also provide a mapping
-     * for values used to display to the user.
-     *
-     * @param start the start of the range (inclusive)
-     * @param end the end of the range (inclusive)
-     * @param displayedValues the values displayed to the user.
-     */
-    public void setRange(int start, int end, String[] displayedValues) {
-        mDisplayedValues = displayedValues;
-        mStart = start;
-        mEnd = end;
-        mCurrent = start;
-        updateView();
-    }
+	public void setOnChangeListener(OnChangedListener listener) {
+		mListener = listener;
+	}
 
-    public void setCurrent(int current) {
-        mCurrent = current;
-        updateView();
-    }
+	public void setFormatter(Formatter formatter) {
+		mFormatter = formatter;
+	}
 
-    /**
-     * The speed (in milliseconds) at which the numbers will scroll
-     * when the the +/- buttons are longpressed. Default is 300ms.
-     */
-    public void setSpeed(long speed) {
-        mSpeed = speed;
-    }
+	/**
+	 * Set the range of numbers allowed for the number picker. The current value
+	 * will be automatically set to the start.
+	 * 
+	 * @param start
+	 *            the start of the range (inclusive)
+	 * @param end
+	 *            the end of the range (inclusive)
+	 */
+	public void setRange(int start, int end) {
+		mStart = start;
+		mEnd = end;
+		mCurrent = start;
+		updateView();
+	}
 
-    public void onClick(View v) {
-        validateInput(mText);
-        if (!mText.hasFocus()) mText.requestFocus();
+	/**
+	 * Set the range of numbers allowed for the number picker. The current value
+	 * will be automatically set to the start. Also provide a mapping for values
+	 * used to display to the user.
+	 * 
+	 * @param start
+	 *            the start of the range (inclusive)
+	 * @param end
+	 *            the end of the range (inclusive)
+	 * @param displayedValues
+	 *            the values displayed to the user.
+	 */
+	public void setRange(int start, int end, String[] displayedValues) {
+		mDisplayedValues = displayedValues;
+		mStart = start;
+		mEnd = end;
+		mCurrent = start;
+		updateView();
+	}
 
-        // now perform the increment/decrement
-        if (R.id.increment == v.getId()) {
-            changeCurrent(mCurrent + 1);
-        } else if (R.id.decrement == v.getId()) {
-            changeCurrent(mCurrent - 1);
-        }
-    }
+	public void setCurrent(int current) {
+		mCurrent = current;
+		updateView();
+	}
 
-    private String formatNumber(int value) {
-        return (mFormatter != null)
-                ? mFormatter.toString(value)
-                : String.valueOf(value);
-    }
+	/**
+	 * The speed (in milliseconds) at which the numbers will scroll when the the
+	 * +/- buttons are longpressed. Default is 300ms.
+	 */
+	public void setSpeed(long speed) {
+		mSpeed = speed;
+	}
 
-    protected void changeCurrent(int current) {
+	public void onClick(View v) {
+		validateInput(mText);
+		if (!mText.hasFocus())
+			mText.requestFocus();
 
-        // Wrap around the values if we go past the start or end
-        if (current > mEnd) {
-            current = mEnd;
-        } else if (current < mStart) {
-            current = mStart;
-        }
-        mPrevious = mCurrent;
-        mCurrent = current;
+		// now perform the increment/decrement
+		if (R.id.increment == v.getId()) {
+			changeCurrent(mCurrent + 1);
+		} else if (R.id.decrement == v.getId()) {
+			changeCurrent(mCurrent - 1);
+		}
+	}
 
-        notifyChange();
-        updateView();
-    }
+	private String formatNumber(int value) {
+		return (mFormatter != null) ? mFormatter.toString(value) : String
+				.valueOf(value);
+	}
 
-    protected void notifyChange() {
-        if (mListener != null) {
-            mListener.onChanged(this, mPrevious, mCurrent);
-        }
-    }
+	protected void changeCurrent(int current) {
 
-    protected void updateView() {
+		// Wrap around the values if we go past the start or end
+		if (current > mEnd) {
+			current = mEnd;
+		} else if (current < mStart) {
+			current = mStart;
+		}
+		mPrevious = mCurrent;
+		mCurrent = current;
 
-        /* If we don't have displayed values then use the
-         * current number else find the correct value in the
-         * displayed values for the current number.
-         */
-        if (mDisplayedValues == null) {
-            mText.setText(formatNumber(mCurrent));
-        } else {
-            mText.setText(mDisplayedValues[mCurrent - mStart]);
-        }
-        mText.setSelection(mText.getText().length());
-    }
+		notifyChange();
+		updateView();
+	}
 
-    private void validateCurrentView(CharSequence str) {
-        int val = getSelectedPos(str.toString());
-        if ((val >= mStart) && (val <= mEnd)) {
-            if (mCurrent != val) {
-                mPrevious = mCurrent;
-                mCurrent = val;
-                notifyChange();
-            }
-        }
-        updateView();
-    }
+	protected void notifyChange() {
+		if (mListener != null) {
+			mListener.onChanged(this, mPrevious, mCurrent);
+		}
+	}
 
-    public void onFocusChange(View v, boolean hasFocus) {
+	protected void updateView() {
 
-        /* When focus is lost check that the text field
-         * has valid values.
-         */
-        if (!hasFocus) {
-            validateInput(v);
-        }
-    }
+		/*
+		 * If we don't have displayed values then use the current number else
+		 * find the correct value in the displayed values for the current
+		 * number.
+		 */
+		if (mDisplayedValues == null) {
+			mText.setText(formatNumber(mCurrent));
+		} else {
+			mText.setText(mDisplayedValues[mCurrent - mStart]);
+		}
+		mText.setSelection(mText.getText().length());
+	}
 
-    private void validateInput(View v) {
-        String str = String.valueOf(((TextView) v).getText());
-        if ("".equals(str)) {
+	private void validateCurrentView(CharSequence str) {
+		int val = getSelectedPos(str.toString());
+		if ((val >= mStart) && (val <= mEnd)) {
+			if (mCurrent != val) {
+				mPrevious = mCurrent;
+				mCurrent = val;
+				notifyChange();
+			}
+		}
+		updateView();
+	}
 
-            // Restore to the old value as we don't allow empty values
-            updateView();
-        } else {
+	public void onFocusChange(View v, boolean hasFocus) {
 
-            // Check the new value and ensure it's in range
-            validateCurrentView(str);
-        }
-    }
+		/*
+		 * When focus is lost check that the text field has valid values.
+		 */
+		if (!hasFocus) {
+			validateInput(v);
+		}
+	}
 
-    /**
-     * We start the long click here but rely on the {@link NumberPickerButton}
-     * to inform us when the long click has ended.
-     */
-    public boolean onLongClick(View v) {
+	private void validateInput(View v) {
+		String str = String.valueOf(((TextView) v).getText());
+		if ("".equals(str)) {
 
-        /* The text view may still have focus so clear it's focus which will
-         * trigger the on focus changed and any typed values to be pulled.
-         */
-        mText.clearFocus();
+			// Restore to the old value as we don't allow empty values
+			updateView();
+		} else {
 
-        if (R.id.increment == v.getId()) {
-            mIncrement = true;
-            mHandler.post(mRunnable);
-        } else if (R.id.decrement == v.getId()) {
-            mDecrement = true;
-            mHandler.post(mRunnable);
-        }
-        return true;
-    }
+			// Check the new value and ensure it's in range
+			validateCurrentView(str);
+		}
+	}
 
-    public void cancelIncrement() {
-        mIncrement = false;
-    }
+	/**
+	 * We start the long click here but rely on the {@link NumberPickerButton}
+	 * to inform us when the long click has ended.
+	 */
+	public boolean onLongClick(View v) {
 
-    public void cancelDecrement() {
-        mDecrement = false;
-    }
+		/*
+		 * The text view may still have focus so clear it's focus which will
+		 * trigger the on focus changed and any typed values to be pulled.
+		 */
+		mText.clearFocus();
 
-    private static final char[] DIGIT_CHARACTERS = new char[] {
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-    };
+		if (R.id.increment == v.getId()) {
+			mIncrement = true;
+			mHandler.post(mRunnable);
+		} else if (R.id.decrement == v.getId()) {
+			mDecrement = true;
+			mHandler.post(mRunnable);
+		}
+		return true;
+	}
 
-    private NumberPickerButton mIncrementButton;
-    private NumberPickerButton mDecrementButton;
+	public void cancelIncrement() {
+		mIncrement = false;
+	}
 
-    private class NumberPickerInputFilter implements InputFilter {
-        public CharSequence filter(CharSequence source, int start, int end,
-                Spanned dest, int dstart, int dend) {
-            if (mDisplayedValues == null) {
-                return mNumberInputFilter.filter(source, start, end, dest, dstart, dend);
-            }
-            CharSequence filtered = String.valueOf(source.subSequence(start, end));
-            String result = String.valueOf(dest.subSequence(0, dstart))
-                    + filtered
-                    + dest.subSequence(dend, dest.length());
-            String str = String.valueOf(result).toLowerCase();
-            for (String val : mDisplayedValues) {
-                val = val.toLowerCase();
-                if (val.startsWith(str)) {
-                    return filtered;
-                }
-            }
-            return "";
-        }
-    }
+	public void cancelDecrement() {
+		mDecrement = false;
+	}
 
-    private class NumberRangeKeyListener extends NumberKeyListener {
+	private static final char[] DIGIT_CHARACTERS = new char[] { '0', '1', '2',
+			'3', '4', '5', '6', '7', '8', '9' };
 
-        // XXX This doesn't allow for range limits when controlled by a
-        // soft input method!
-        public int getInputType() {
-            return InputType.TYPE_CLASS_NUMBER;
-        }
+	private NumberPickerButton mIncrementButton;
+	private NumberPickerButton mDecrementButton;
 
-        @Override
-        protected char[] getAcceptedChars() {
-            return DIGIT_CHARACTERS;
-        }
+	private class NumberPickerInputFilter implements InputFilter {
+		public CharSequence filter(CharSequence source, int start, int end,
+				Spanned dest, int dstart, int dend) {
+			if (mDisplayedValues == null) {
+				return mNumberInputFilter.filter(source, start, end, dest,
+						dstart, dend);
+			}
+			CharSequence filtered = String.valueOf(source.subSequence(start,
+					end));
+			String result = String.valueOf(dest.subSequence(0, dstart))
+					+ filtered + dest.subSequence(dend, dest.length());
+			String str = String.valueOf(result).toLowerCase();
+			for (String val : mDisplayedValues) {
+				val = val.toLowerCase();
+				if (val.startsWith(str)) {
+					return filtered;
+				}
+			}
+			return "";
+		}
+	}
 
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end,
-                Spanned dest, int dstart, int dend) {
+	private class NumberRangeKeyListener extends NumberKeyListener {
 
-            CharSequence filtered = super.filter(source, start, end, dest, dstart, dend);
-            if (filtered == null) {
-                filtered = source.subSequence(start, end);
-            }
+		// XXX This doesn't allow for range limits when controlled by a
+		// soft input method!
+		public int getInputType() {
+			return InputType.TYPE_CLASS_NUMBER;
+		}
 
-            String result = String.valueOf(dest.subSequence(0, dstart))
-                    + filtered
-                    + dest.subSequence(dend, dest.length());
+		@Override
+		protected char[] getAcceptedChars() {
+			return DIGIT_CHARACTERS;
+		}
 
-            if ("".equals(result)) {
-                return result;
-            }
-            int val = getSelectedPos(result);
+		@Override
+		public CharSequence filter(CharSequence source, int start, int end,
+				Spanned dest, int dstart, int dend) {
 
-            /* Ensure the user can't type in a value greater
-             * than the max allowed. We have to allow less than min
-             * as the user might want to delete some numbers
-             * and then type a new number.
-             */
-            if (val > mEnd) {
-                return "";
-            } else {
-                return filtered;
-            }
-        }
-    }
+			CharSequence filtered = super.filter(source, start, end, dest,
+					dstart, dend);
+			if (filtered == null) {
+				filtered = source.subSequence(start, end);
+			}
 
-    private int getSelectedPos(String str) {
-        if (mDisplayedValues == null) {
-            return Integer.parseInt(str);
-        } else {
-            for (int i = 0; i < mDisplayedValues.length; i++) {
+			String result = String.valueOf(dest.subSequence(0, dstart))
+					+ filtered + dest.subSequence(dend, dest.length());
 
-                /* Don't force the user to type in jan when ja will do */
-                str = str.toLowerCase();
-                if (mDisplayedValues[i].toLowerCase().startsWith(str)) {
-                    return mStart + i;
-                }
-            }
+			if ("".equals(result)) {
+				return result;
+			}
+			int val = getSelectedPos(result);
 
-            /* The user might have typed in a number into the month field i.e.
-             * 10 instead of OCT so support that too.
-             */
-            try {
-                return Integer.parseInt(str);
-            } catch (NumberFormatException e) {
+			/*
+			 * Ensure the user can't type in a value greater than the max
+			 * allowed. We have to allow less than min as the user might want to
+			 * delete some numbers and then type a new number.
+			 */
+			if (val > mEnd) {
+				return "";
+			} else {
+				return filtered;
+			}
+		}
+	}
 
-                /* Ignore as if it's not a number we don't care */
-            }
-        }
-        return mStart;
-    }
+	private int getSelectedPos(String str) {
+		if (mDisplayedValues == null) {
+			return Integer.parseInt(str);
+		} else {
+			for (int i = 0; i < mDisplayedValues.length; i++) {
 
-    /**
-     * @return the current value.
-     */
-    public int getCurrent() {
-        return mCurrent;
-    }
+				/* Don't force the user to type in jan when ja will do */
+				str = str.toLowerCase();
+				if (mDisplayedValues[i].toLowerCase().startsWith(str)) {
+					return mStart + i;
+				}
+			}
+
+			/*
+			 * The user might have typed in a number into the month field i.e.
+			 * 10 instead of OCT so support that too.
+			 */
+			try {
+				return Integer.parseInt(str);
+			} catch (NumberFormatException e) {
+
+				/* Ignore as if it's not a number we don't care */
+			}
+		}
+		return mStart;
+	}
+
+	/**
+	 * @return the current value.
+	 */
+	public int getCurrent() {
+		return mCurrent;
+	}
 }

@@ -19,7 +19,6 @@ public class PopupFragment extends DialogFragment {
 
 	static PopupFragment newInstance(String title, String message) {
 		PopupFragment f = new PopupFragment();
-		// Supply num input as an argument.
 		Bundle args = new Bundle();
 		args.putString("Message", message);
 		args.putString("Title", title);
@@ -50,14 +49,12 @@ public class PopupFragment extends DialogFragment {
 				FragmentTransaction ft = getFragmentManager()
 						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				/*Fragment a;
-				if ((a = getFragmentManager().findFragmentByTag(
-						getString(R.string.storico_fragment))) != null)
-					ft.remove(a);*/
-				ft.replace(R.id.container, new StreetDetailsFragment(),
-						getString(R.string.storico_fragment))
-						.addToBackStack(null).commit();
-				dismiss();
+				// TODO da fare
+				/*
+				 * ft.replace(R.id.container, new DetailsFragment(),
+				 * getString(R.string.storico_fragment))
+				 * .addToBackStack(null).commit(); dismiss();
+				 */
 			}
 		});
 		Button btnAnnulla = (Button) v.findViewById(R.id.btnDel);

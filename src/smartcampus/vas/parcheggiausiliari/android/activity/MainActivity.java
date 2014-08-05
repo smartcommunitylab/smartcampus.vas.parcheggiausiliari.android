@@ -25,21 +25,20 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
-
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private int current = 0;
 
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        if(savedInstanceState != null)
-        	current = savedInstanceState.getInt("current");
-        
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState != null)
+			current = savedInstanceState.getInt("current");
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		// to remove the application logo in the drawer Title
 		getSupportActionBar().setIcon(
@@ -77,19 +76,19 @@ public class MainActivity extends ActionBarActivity {
 
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-		mDrawerList.setAdapter(new MySimpleArrayAdapter(
-				getApplicationContext(), getResources().getStringArray(
-						R.array.drawer_entries_strings)));
-        
-        /**															
+		mDrawerList.setAdapter(new DrawerArrayAdapter(getApplicationContext(),
+				getResources().getStringArray(R.array.drawer_entries_strings)));
+
+		/**															
         *
         */
-        
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        String[] strings = {"Mappa","Storico","Logout"};
-        mDrawerList.setAdapter(new MySimpleArrayAdapter(getApplicationContext(), strings));
-        
-        mDrawerList.setOnItemClickListener(new OnItemClickListener(){
+
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		String[] strings = { "Mappa", "Storico", "Logout" };
+		mDrawerList.setAdapter(new DrawerArrayAdapter(getApplicationContext(),
+				strings));
+
+		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -103,10 +102,6 @@ public class MainActivity extends ActionBarActivity {
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-//						Fragment a;
-//						if ((a = getSupportFragmentManager().findFragmentByTag(
-//								getString(R.string.map_fragment))) != null)
-//							ft.remove(a);
 						ft.replace(R.id.container, new MapFragment(),
 								getString(R.string.map_fragment))
 								.addToBackStack(null).commit();
@@ -115,10 +110,6 @@ public class MainActivity extends ActionBarActivity {
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-//						Fragment a;
-//						if ((a = getSupportFragmentManager().findFragmentByTag(
-//								getString(R.string.storico_fragment))) != null)
-//							ft.remove(a);
 						ft.replace(R.id.container, new StoricoFragment(),
 								getString(R.string.storico_fragment))
 								.addToBackStack(null).commit();
@@ -127,10 +118,6 @@ public class MainActivity extends ActionBarActivity {
 						FragmentTransaction ft = getSupportFragmentManager()
 								.beginTransaction();
 						ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-//						Fragment a;
-//						if ((a = getSupportFragmentManager().findFragmentByTag(
-//								getString(R.string.login_fragment))) != null)
-//							ft.remove(a);
 						ft.replace(R.id.container, new Fragment_prova(),
 								getString(R.string.login_fragment))
 								.addToBackStack(null).commit();
@@ -155,20 +142,20 @@ public class MainActivity extends ActionBarActivity {
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		outState.putInt("current", current);
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onRestoreInstanceState(savedInstanceState);
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -182,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onKeyDown(keyCode, e);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -193,27 +180,27 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menu.setGroupVisible(0, false);
-        return true;
-    }
 
-	public static class MySimpleArrayAdapter extends ArrayAdapter<String> {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		menu.setGroupVisible(0, false);
+		return true;
+	}
+
+	public static class DrawerArrayAdapter extends ArrayAdapter<String> {
 		private final Context context;
 		private final ArrayList<String> values;
 
-		public MySimpleArrayAdapter(Context context, ArrayList<String> values) {
-			super(context, R.layout.rowlayout, values);
+		public DrawerArrayAdapter(Context context, ArrayList<String> values) {
+			super(context, R.layout.drawerrow, values);
 			this.context = context;
 			this.values = values;
 		}
 
-		public MySimpleArrayAdapter(Context context, String[] values) {
-			super(context, R.layout.rowlayout, values);
+		public DrawerArrayAdapter(Context context, String[] values) {
+			super(context, R.layout.drawerrow, values);
 			this.context = context;
 			this.values = new ArrayList<String>(Arrays.asList(values));
 		}
@@ -222,13 +209,12 @@ public class MainActivity extends ActionBarActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+			View rowView = inflater.inflate(R.layout.drawerrow, parent, false);
 			TextView textView = (TextView) rowView.findViewById(R.id.txt1);
 			textView.setText(values.get(position));
 
 			return rowView;
 		}
 	}
-	
-    
+
 }

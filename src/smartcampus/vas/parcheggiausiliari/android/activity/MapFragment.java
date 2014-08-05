@@ -54,10 +54,6 @@ public class MapFragment extends Fragment {
 				FragmentTransaction ft = getFragmentManager()
 						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-//				Fragment a;
-//				if ((a = getFragmentManager().findFragmentByTag(
-//						getString(R.string.parklist_fragment))) != null)
-//					ft.remove(a);
 				ft.replace(R.id.container, new ParkListFragment(),
 						getString(R.string.parklist_fragment))
 						.addToBackStack(null)
@@ -75,10 +71,6 @@ public class MapFragment extends Fragment {
 				FragmentTransaction ft = getFragmentManager()
 						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-//				Fragment a;
-//				if ((a = getFragmentManager().findFragmentByTag(
-//						getString(R.string.streetlist_fragment))) != null)
-//					ft.remove(a);
 				ft.replace(R.id.container, new StreetListFragment(),
 						getString(R.string.streetlist_fragment))
 						.addToBackStack(null)// Start the animated transition.
@@ -105,11 +97,9 @@ public class MapFragment extends Fragment {
 				IGeoPoint point = map.getProjection().fromPixels(event.getX(),
 						event.getY());
 				showPopup(
-						map,/*
-							 * "Lat: " + (point.getLatitudeE6() / 10E5) +
-							 * " ,  Lon: " + (point.getLongitudeE6() / 10E5));
-							 */
-						"VIA",OSMGeocoding
+						map,
+						"VIA",
+						OSMGeocoding
 								.FromPointToAddress(
 										new GeoPoint(point.getLatitudeE6(),
 												point.getLongitudeE6()),
@@ -117,16 +107,10 @@ public class MapFragment extends Fragment {
 			}
 		});
 
-		/*
-		 * MyPathOverlay p = new MyPathOverlay(Color.argb(128, 128, 0, 128),
-		 * getActivity()); p.getPaint().setStyle(Style.FILL); for (GeoPoint pt :
-		 * AusiliariHelper.Parks()) { p.addPoint(pt); }
-		 * map.getOverlays().add(p);
-		 */
-
 		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
 		for (GeoPoint pt : AusiliariHelper.Parks()) {
-			OverlayItem item = new OverlayItem("Park "+pt.getAltitude(), "14 / 07 / 2014 alle 17.16 \n da Mario Rossi", pt);
+			OverlayItem item = new OverlayItem("Park " + pt.getAltitude(),
+					"14 / 07 / 2014 alle 17.16 \n da Mario Rossi", pt);
 			item.setMarker(getResources().getDrawable(
 					R.drawable.marker_poi_generic));
 			items.add(item);
@@ -146,7 +130,8 @@ public class MapFragment extends Fragment {
 							@Override
 							public boolean onItemSingleTapUp(int arg0,
 									OverlayItem arg1) {
-								showPopup(map,arg1.getTitle(), arg1.getSnippet());
+								showPopup(map, arg1.getTitle(),
+										arg1.getSnippet());
 								return true;
 							}
 						}, map.getResourceProxy()));
@@ -159,7 +144,6 @@ public class MapFragment extends Fragment {
 		DialogFragment df = PopupFragment.newInstance(title, lastData);
 		df.show(getFragmentManager(), getTag());
 	}
-	
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

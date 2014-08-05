@@ -1,6 +1,7 @@
 package smartcampus.vas.parcheggiausiliari.android.activity;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.views.PagerSlidingTabStrip;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment_prova extends Fragment {
+public class DetailsFragment extends Fragment {
 	private PagerSlidingTabStrip tabs;
+	private BaseDT obj;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +28,12 @@ public class Fragment_prova extends Fragment {
 		// Bind the tabs to the ViewPager
 		tabs.setViewPager(pager);
 		return rootView;
+
+	}
+
+	public DetailsFragment(BaseDT obj) {
+		// TODO Auto-generated constructor stub
+		this.obj = obj;
 	}
 
 	@Override
@@ -41,9 +49,9 @@ public class Fragment_prova extends Fragment {
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
 
-			/*
-			 * if(getCount()<= 3) tabs.setShouldExpand(true);
-			 */
+			if (getCount() <= 3)
+				tabs.setShouldExpand(true);
+
 		}
 
 		@Override
@@ -59,9 +67,9 @@ public class Fragment_prova extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			if (position == 0)
-				return new StoricoFragment();
+				return SegnalaFragment.newInstance(obj, 66, 37, 55, 0);
 			else
-				return new ParkListFragment();
+				return new StoricoFragment();
 		}
 
 	}
