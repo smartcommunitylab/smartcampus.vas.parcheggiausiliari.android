@@ -5,7 +5,7 @@ import smartcampus.vas.parcheggiausiliari.android.views.PagerSlidingTabStrip;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ public class StreetDetailsFragment extends Fragment {
     	super.onSaveInstanceState(outState);
     }
     
-    public class MyPagerAdapter extends FragmentPagerAdapter {
+    public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 		private final String[] TITLES = { "Segnala", "Storico"};
 
@@ -58,7 +58,7 @@ public class StreetDetailsFragment extends Fragment {
 		@Override
 		public Fragment getItem(int position) {
 			if(position == 0)
-				return new SegnalaFragment();
+				return SegnalaFragment.newInstance(66, 37, 55, 0);
 			else
 				return new StoricoFragment();
 		}

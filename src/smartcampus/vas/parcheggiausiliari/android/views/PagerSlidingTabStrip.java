@@ -16,6 +16,9 @@
 
 package smartcampus.vas.parcheggiausiliari.android.views;
 
+import java.util.Locale;
+
+import smartcampus.vas.parcheggiausiliari.android.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -38,12 +41,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.Locale;
-
-import smartcampus.vas.parcheggiausiliari.android.R;
-import smartcampus.vas.parcheggiausiliari.android.R.drawable;
-import smartcampus.vas.parcheggiausiliari.android.R.styleable;
 
 
 public class PagerSlidingTabStrip extends HorizontalScrollView {
