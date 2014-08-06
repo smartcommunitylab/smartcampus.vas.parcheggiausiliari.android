@@ -13,11 +13,11 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+import smartcampus.vas.parcheggiausiliari.android.model.Parking;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import smartcampus.vas.parcheggiausiliari.android.util.GPSTracker;
 import smartcampus.vas.parcheggiausiliari.android.util.LongPressOverlay;
 import smartcampus.vas.parcheggiausiliari.android.util.OSMGeocoding;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -108,29 +108,29 @@ public class MapFragment extends Fragment {
 			}
 		});
 
-		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-		for (GeoPoint pt : AusiliariHelper.Parks()) {
-			OverlayItem item = new OverlayItem("Park " + pt.getAltitude(),
-					"14 / 07 / 2014 alle 17.16 \n da Mario Rossi", pt);
+		ArrayList<ParkingMarker> items = new ArrayList<ParkingMarker>();
+		for (Parking mPark : new AusiliariHelper(getActivity()).getParklist()) {
+			ParkingMarker item = new ParkingMarker(
+					"14 / 07 / 2014 alle 17.16 \n da Mario Rossi", mPark);
 			item.setMarker(getResources().getDrawable(
 					R.drawable.marker_poi_generic));
 			items.add(item);
 		}
 
 		map.getOverlays().add(
-				new ItemizedOverlayWithFocus<OverlayItem>(items,
-						new OnItemGestureListener<OverlayItem>() {
+				new ItemizedOverlayWithFocus<ParkingMarker>(items,
+						new OnItemGestureListener<ParkingMarker>() {
 
 							@Override
 							public boolean onItemLongPress(int arg0,
-									OverlayItem arg1) {
+									ParkingMarker arg1) {
 								// TODO Auto-generated method stub
 								return false;
 							}
 
 							@Override
 							public boolean onItemSingleTapUp(int arg0,
-									OverlayItem arg1) {
+									ParkingMarker arg1) {
 								showPopup(map, arg1.getTitle(),
 										arg1.getSnippet());
 								return true;
@@ -162,6 +162,20 @@ public class MapFragment extends Fragment {
 			super(context);
 		}
 
+	}
+
+	private class ParkingMarker extends OverlayItem {
+
+		private Parking mParking;
+
+		public ParkingMarker(String aSnippet, Parking parking) {
+			super(parking.getName(), aSnippet, new GeoPoint(parking.getPosition()[0], parking.getPosition()[1]));
+			mParking = parking;
+		}
+
+		public Parking getmParking() {
+			return mParking;
+		}
 	}
 
 }
