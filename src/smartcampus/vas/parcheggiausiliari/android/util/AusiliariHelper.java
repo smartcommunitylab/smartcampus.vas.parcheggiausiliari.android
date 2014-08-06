@@ -10,9 +10,7 @@ import smartcampus.vas.parcheggiausiliari.android.model.Street;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 public class AusiliariHelper {
 	private static Context mContext;
@@ -55,9 +53,13 @@ public class AusiliariHelper {
 		protected Void doInBackground(BaseDT... params) {
 			if(Parking.class.isInstance(params[0]))
 			{
+				Parking temp = ((Parking)params[0]);
 				Log.d("DEBUG","Parcheggio");
+				Log.d("DEBUG", temp.getName()+ " " +temp.getSlotsOccupiedOnTotal()+" "+temp.getSlotsUnavailable());
 			} else {
+				Street temp = ((Street)params[0]);
 				Log.d("DEBUG","Via");
+				Log.d("DEBUG", temp.getName()+ " " +temp.getSlotsOccupiedOnFree()+" "+temp.getSlotsOccupiedOnPaying()+" "+temp.getSlotsOccupiedOnTimed()+" "+temp.getSlotsUnavailable());
 			}
 			return null;
 		}
@@ -189,7 +191,7 @@ public class AusiliariHelper {
 		protected Parking[] doInBackground(Void... params) {
 			double[] loc1 = { 46.068654, 11.150679 };
 			double[] loc2 = { 46.069386, 11.151389 };
-			double[] loc3 = { 46.068686, 11.150823 };
+			double[] loc3 = { 46.068686, 11.151723 };
 			Parking[] array = {
 					new Parking("Parcheggio1", "Parcheggio di prova", "p001",
 							loc1, 132),

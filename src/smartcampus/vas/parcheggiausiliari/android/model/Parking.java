@@ -15,19 +15,19 @@ public class Parking extends BaseDT {
 		return mPosition;
 	}
 
-	public int getmSlotsOccupiedOnTotal() {
+	public int getSlotsOccupiedOnTotal() {
 		return mSlotsOccupiedOnTotal;
 	}
 
-	public void setmSlotsOccupiedOnTotal(int mSlotsOccupiedOnTotal) {
+	public void setSlotsOccupiedOnTotal(int mSlotsOccupiedOnTotal) {
 		this.mSlotsOccupiedOnTotal = mSlotsOccupiedOnTotal;
 	}
 
-	public int getmSlotsUnavailable() {
+	public int getSlotsUnavailable() {
 		return mSlotsUnavailable;
 	}
 
-	public void setmSlotsUnavailable(int mSlotsUnavailable) {
+	public void setSlotsUnavailable(int mSlotsUnavailable) {
 		this.mSlotsUnavailable = mSlotsUnavailable;
 	}
 

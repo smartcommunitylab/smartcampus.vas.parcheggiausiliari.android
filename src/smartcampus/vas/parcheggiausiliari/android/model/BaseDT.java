@@ -19,5 +19,8 @@ public class BaseDT {
 	public String getId() {
 		return mId;
 	}
+	public String getDescription() {
+		return mDescription;
+	}
 
 }

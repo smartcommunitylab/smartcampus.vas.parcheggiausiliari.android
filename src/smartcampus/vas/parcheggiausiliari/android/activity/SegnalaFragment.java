@@ -117,22 +117,25 @@ public class SegnalaFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				new AlertDialog.Builder(getActivity())
-		        .setIcon(android.R.drawable.ic_menu_upload)
-		        .setTitle("Segnalazione")
-		        .setMessage("Stai per fare una segnalazione. Continuare?")
-		        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+						.setIcon(android.R.drawable.ic_menu_upload)
+						.setTitle("Segnalazione")
+						.setMessage(
+								"Stai per fare una segnalazione. Continuare?")
+						.setPositiveButton("Si",
+								new DialogInterface.OnClickListener() {
 
-		            @Override
-		            public void onClick(DialogInterface dialog, int which) {
-
-						updateObject();
-						new AusiliariHelper(getActivity()).sendData(obj);  
-						Toast.makeText(getActivity(), "Data Sent", Toast.LENGTH_LONG).show();
-		            }
-
-		        })
-		        .setNegativeButton("No", null)
-		        .show();
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										clearFocus();
+										updateObject();
+										new AusiliariHelper(getActivity())
+												.sendData(obj);
+										Toast.makeText(getActivity(),
+												"Data Sent", Toast.LENGTH_LONG)
+												.show();
+									}
+								}).setNegativeButton("No", null).show();
 			}
 		});
 
@@ -145,17 +148,29 @@ public class SegnalaFragment extends Fragment {
 
 	}
 
-	private void updateObject() {
-		if(Parking.class.isInstance(obj))
-		{
-			((Parking)obj).setmSlotsOccupiedOnTotal(mPickerFree.getCurrent());
-			((Parking)obj).setmSlotsUnavailable(mPickerWork.getCurrent());
-		} else{
+	/**
+	 * method called to update value of the numberpickers if the text was
+	 * written with the keyboard
+	 */
+	private void clearFocus() {
+		// TODO Auto-generated method stub
+		mPickerFree.clearFocus();
+		mPickerPayment.clearFocus();
+		mPickerTimed.clearFocus();
+		mPickerWork.clearFocus();
+	}
 
-			((Street)obj).setSlotsOccupiedOnFree(mPickerFree.getCurrent());
-			((Street)obj).setSlotsUnavailable(mPickerWork.getCurrent());
-			((Street)obj).setSlotsOccupiedOnPaying(mPickerPayment.getCurrent());
-			((Street)obj).setSlotsOccupiedOnTimed(mPickerTimed.getCurrent());
+	private void updateObject() {
+		if (Parking.class.isInstance(obj)) {
+			((Parking) obj).setSlotsOccupiedOnTotal(mPickerFree.getCurrent());
+			((Parking) obj).setSlotsUnavailable(mPickerWork.getCurrent());
+		} else {
+
+			((Street) obj).setSlotsOccupiedOnFree(mPickerFree.getCurrent());
+			((Street) obj).setSlotsUnavailable(mPickerWork.getCurrent());
+			((Street) obj)
+					.setSlotsOccupiedOnPaying(mPickerPayment.getCurrent());
+			((Street) obj).setSlotsOccupiedOnTimed(mPickerTimed.getCurrent());
 		}
 	}
 
@@ -164,29 +179,34 @@ public class SegnalaFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			new AlertDialog.Builder(getActivity())
-	        .setIcon(android.R.drawable.ic_delete)
-	        .setTitle("Reset")
-	        .setMessage("Stai per cancellare i dati... Continuare?")
-	        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+					.setIcon(android.R.drawable.ic_delete)
+					.setTitle("Reset")
+					.setMessage("Stai per cancellare i dati... Continuare?")
+					.setPositiveButton("Si",
+							new DialogInterface.OnClickListener() {
 
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
 
-	            	mPickerFree.setCurrent(mValue1);
-	    			mPickerWork.setCurrent(mValue2);
-	    			mPickerPayment.setCurrent(mValue3);
-	    			mPickerTimed.setCurrent(mValue4);
+									mPickerFree.setCurrent(mValue1);
+									mPickerWork.setCurrent(mValue2);
+									mPickerPayment.setCurrent(mValue3);
+									mPickerTimed.setCurrent(mValue4);
 
-	    			SharedPreferences prefs = getActivity().getSharedPreferences(
-	    					MY_PREFERENCES, Context.MODE_PRIVATE);
-	    			SharedPreferences.Editor editor = prefs.edit();
-	    			editor.remove(obj.getId()).commit();
-	    			Toast.makeText(getActivity(), "Dati cancellati", Toast.LENGTH_LONG).show();
-	            }
+									SharedPreferences prefs = getActivity()
+											.getSharedPreferences(
+													MY_PREFERENCES,
+													Context.MODE_PRIVATE);
+									SharedPreferences.Editor editor = prefs
+											.edit();
+									editor.remove(obj.getId()).commit();
+									Toast.makeText(getActivity(),
+											"Dati cancellati",
+											Toast.LENGTH_LONG).show();
+								}
 
-	        })
-	        .setNegativeButton("No", null)
-	        .show();			
+							}).setNegativeButton("No", null).show();
 		}
 
 	}

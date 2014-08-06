@@ -1,7 +1,7 @@
 package smartcampus.vas.parcheggiausiliari.android.activity;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
-
+import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,13 +16,17 @@ import android.widget.TextView;
 public class PopupFragment extends DialogFragment {
 
 	private String message;
-	private String title;
+	private BaseDT obj = null;
 
-	static PopupFragment newInstance(String title, String message) {
-		PopupFragment f = new PopupFragment();
+	public PopupFragment(BaseDT obj) {
+		// TODO Auto-generated constructor stub
+		this.obj = obj;
+	}
+
+	static PopupFragment newInstance(BaseDT obj, String message) {
+		PopupFragment f = new PopupFragment(obj);
 		Bundle args = new Bundle();
 		args.putString("Message", message);
-		args.putString("Title", title);
 		f.setArguments(args);
 		return f;
 	}
@@ -31,7 +35,6 @@ public class PopupFragment extends DialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		message = getArguments().getString("Message");
-		title = getArguments().getString("Title");
 	}
 
 	@Override
@@ -50,12 +53,12 @@ public class PopupFragment extends DialogFragment {
 				FragmentTransaction ft = getFragmentManager()
 						.beginTransaction();
 				ft.setCustomAnimations(R.anim.enter, R.anim.exit);
-				// TODO da fare
-				/*
-				 * ft.replace(R.id.container, new DetailsFragment(),
-				 * getString(R.string.storico_fragment))
-				 * .addToBackStack(null).commit(); dismiss();
-				 */
+				
+				
+				  ft.replace(R.id.container, new DetailsFragment(obj),
+				  getString(R.string.storico_fragment))
+				 .addToBackStack(null).commit(); dismiss();
+				 
 			}
 		});
 		Button btnAnnulla = (Button) v.findViewById(R.id.btnDel);
@@ -67,7 +70,7 @@ public class PopupFragment extends DialogFragment {
 				dismiss();
 			}
 		});
-		getDialog().setTitle(title);
+		getDialog().setTitle(obj.getName());
 		return v;
 	}
 }

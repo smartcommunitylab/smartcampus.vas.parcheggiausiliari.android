@@ -18,7 +18,6 @@ import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import smartcampus.vas.parcheggiausiliari.android.util.GPSTracker;
 import smartcampus.vas.parcheggiausiliari.android.util.LongPressOverlay;
 import smartcampus.vas.parcheggiausiliari.android.util.OSMGeocoding;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -31,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MapFragment extends Fragment {
 
@@ -98,14 +98,19 @@ public class MapFragment extends Fragment {
 				Log.e("", "ASDF");
 				IGeoPoint point = map.getProjection().fromPixels(event.getX(),
 						event.getY());
-				showPopup(
+				Toast.makeText(getActivity(),OSMGeocoding
+						.FromPointToAddress(
+								new GeoPoint(point.getLatitudeE6(),
+										point.getLongitudeE6()),
+								getActivity()).get(0).getAddressLine(0) , Toast.LENGTH_LONG).show();
+				/*showPopup(
 						map,
 						"VIA",
 						OSMGeocoding
 								.FromPointToAddress(
 										new GeoPoint(point.getLatitudeE6(),
 												point.getLongitudeE6()),
-										getActivity()).get(0).getAddressLine(0));
+										getActivity()).get(0).getAddressLine(0));*/
 			}
 		});
 
@@ -132,8 +137,7 @@ public class MapFragment extends Fragment {
 							@Override
 							public boolean onItemSingleTapUp(int arg0,
 									ParkingMarker arg1) {
-								showPopup(map, arg1.getTitle(),
-										arg1.getSnippet());
+								showPopup(map, arg1);
 								return true;
 							}
 						}, map.getResourceProxy()));
@@ -142,10 +146,11 @@ public class MapFragment extends Fragment {
 		return rootView;
 	}
 
-	public void showPopup(View anchorView, String title, String lastData) {
-		DialogFragment df = PopupFragment.newInstance(title, lastData);
+	protected void showPopup(View anchorView, ParkingMarker arg1) {
+		DialogFragment df = PopupFragment.newInstance(arg1.getmParking(),arg1.getmParking().getName());
 		df.show(getFragmentManager(), getTag());
 	}
+
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
