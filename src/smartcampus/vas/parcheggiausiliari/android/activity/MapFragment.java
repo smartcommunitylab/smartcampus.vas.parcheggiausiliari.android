@@ -17,6 +17,7 @@ import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import smartcampus.vas.parcheggiausiliari.android.util.GPSTracker;
 import smartcampus.vas.parcheggiausiliari.android.util.LongPressOverlay;
 import smartcampus.vas.parcheggiausiliari.android.util.OSMGeocoding;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

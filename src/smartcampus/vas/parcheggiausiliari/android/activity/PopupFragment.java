@@ -1,6 +1,7 @@
 package smartcampus.vas.parcheggiausiliari.android.activity;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;

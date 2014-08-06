@@ -1,23 +1,23 @@
 package smartcampus.vas.parcheggiausiliari.android.model;
 
 public class BaseDT {
-	private String name;
-	private String description;
-	private String id;
+	private String mName;
+	private String mDescription;
+	private String mId;
 
 	public String getName() {
-		return name;
+		return mName;
 	}
 
 	public BaseDT(String name, String description, String id) {
 		super();
-		this.name = name;
-		this.description = description;
-		this.id = id;
+		this.mName = name;
+		this.mDescription = description;
+		this.mId = id;
 	}
 
 	public String getId() {
-		return id;
+		return mId;
 	}
 
 }

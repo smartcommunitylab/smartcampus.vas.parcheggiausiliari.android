@@ -4,6 +4,7 @@ import smartcampus.vas.parcheggiausiliari.android.R;
 import smartcampus.vas.parcheggiausiliari.android.activity.ParkListFragment.MySimpleArrayAdapter;
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;

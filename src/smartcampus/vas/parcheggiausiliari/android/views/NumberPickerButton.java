@@ -17,6 +17,7 @@
 package smartcampus.vas.parcheggiausiliari.android.views;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;

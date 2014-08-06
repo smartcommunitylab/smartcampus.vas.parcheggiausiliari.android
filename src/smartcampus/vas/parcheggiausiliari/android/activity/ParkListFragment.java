@@ -6,6 +6,7 @@ import java.util.Arrays;
 import smartcampus.vas.parcheggiausiliari.android.R;
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
-	private int current = 0;
+	private int mCurrent = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 
 		if (savedInstanceState != null)
-			current = savedInstanceState.getInt("current");
+			mCurrent = savedInstanceState.getInt("current");
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		// to remove the application logo in the drawer Title
@@ -93,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				if (arg2 != current)
+				if (arg2 != mCurrent)
 					if (arg2 == 0) {
 						// getSupportFragmentManager().beginTransaction().replace(R.id.container,
 						// new MapFragment(getApplicationContext())).commit();
@@ -124,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
 					}
 
 				mDrawerLayout.closeDrawer(mDrawerList);
-				current = arg2;
+				mCurrent = arg2;
 			}
 		});
 		mTitle = getTitle();
@@ -147,7 +148,7 @@ public class MainActivity extends ActionBarActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putInt("current", current);
+		outState.putInt("current", mCurrent);
 	}
 
 	@Override

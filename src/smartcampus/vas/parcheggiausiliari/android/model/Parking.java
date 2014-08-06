@@ -2,24 +2,24 @@ package smartcampus.vas.parcheggiausiliari.android.model;
 
 public class Parking extends BaseDT {
 
-	private double[] position;
-	private int slotsTotal;
-	private int slotsOccupiedOnTotal;
-	private int slotsUnavailable;
+	private double[] mPosition;
+	private int mSlotsTotal;
+	private int mSlotsOccupiedOnTotal;
+	private int mSlotsUnavailable;
 
 	public int getSlotsTotal() {
-		return slotsTotal;
+		return mSlotsTotal;
 	}
 
 	public double[] getPosition() {
-		return position;
+		return mPosition;
 	}
 
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal) {
 		super(name, description, id);
-		this.position = position;
-		this.slotsTotal = slotsTotal;
+		this.mPosition = position;
+		this.mSlotsTotal = slotsTotal;
 
 	}
 

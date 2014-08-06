@@ -19,6 +19,7 @@ package smartcampus.vas.parcheggiausiliari.android.views;
 import java.util.Locale;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
