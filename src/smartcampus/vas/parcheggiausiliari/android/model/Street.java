@@ -15,6 +15,34 @@ public class Street extends BaseDT {
 	 */
 	private int slotsPaying;
 
+	public int getSlotsOccupiedOnFree() {
+		return slotsOccupiedOnFree;
+	}
+
+	public void setSlotsOccupiedOnFree(int slotsOccupiedOnFree) {
+		this.slotsOccupiedOnFree = slotsOccupiedOnFree;
+	}
+
+	public int getSlotsOccupiedOnPaying() {
+		return slotsOccupiedOnPaying;
+	}
+
+	public void setSlotsOccupiedOnPaying(int slotsOccupiedOnPaying) {
+		this.slotsOccupiedOnPaying = slotsOccupiedOnPaying;
+	}
+
+	public int getSlotsOccupiedOnTimed() {
+		return slotsOccupiedOnTimed;
+	}
+
+	public void setSlotsOccupiedOnTimed(int slotsOccupiedOnTimed) {
+		this.slotsOccupiedOnTimed = slotsOccupiedOnTimed;
+	}
+
+	public void setSlotsUnavailable(int slotsUnavailable) {
+		this.slotsUnavailable = slotsUnavailable;
+	}
+
 	public Street(String name, String description, String id, int slotsFree,
 			int slotsPaying, int slotsTimed) {
 		super(name, description, id);

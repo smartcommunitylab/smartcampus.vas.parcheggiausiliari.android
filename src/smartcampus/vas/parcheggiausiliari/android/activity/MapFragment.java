@@ -18,6 +18,7 @@ import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import smartcampus.vas.parcheggiausiliari.android.util.GPSTracker;
 import smartcampus.vas.parcheggiausiliari.android.util.LongPressOverlay;
 import smartcampus.vas.parcheggiausiliari.android.util.OSMGeocoding;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -169,7 +170,8 @@ public class MapFragment extends Fragment {
 		private Parking mParking;
 
 		public ParkingMarker(String aSnippet, Parking parking) {
-			super(parking.getName(), aSnippet, new GeoPoint(parking.getPosition()[0], parking.getPosition()[1]));
+			super(parking.getName(), aSnippet, new GeoPoint(
+					parking.getPosition()[0], parking.getPosition()[1]));
 			mParking = parking;
 		}
 

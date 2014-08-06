@@ -4,10 +4,12 @@ import smartcampus.vas.parcheggiausiliari.android.R;
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.model.Parking;
 import smartcampus.vas.parcheggiausiliari.android.model.Street;
+import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import smartcampus.vas.parcheggiausiliari.android.views.NumberPicker;
 import smartcampus.vas.parcheggiausiliari.android.views.NumberPicker.OnChangedListener;
-
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SegnalaFragment extends Fragment {
 
@@ -67,7 +70,7 @@ public class SegnalaFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_details, container,
+		View rootView = inflater.inflate(R.layout.fragment_segnala, container,
 				false);
 		mTxt = (TextView) rootView.findViewById(R.id.txtTitle);
 		mTxt.setText(obj.getName());
@@ -113,8 +116,23 @@ public class SegnalaFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				new AlertDialog.Builder(getActivity())
+		        .setIcon(android.R.drawable.ic_menu_upload)
+		        .setTitle("Segnalazione")
+		        .setMessage("Stai per fare una segnalazione. Continuare?")
+		        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
 
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+
+						updateObject();
+						new AusiliariHelper(getActivity()).sendData(obj);  
+						Toast.makeText(getActivity(), "Data Sent", Toast.LENGTH_LONG).show();
+		            }
+
+		        })
+		        .setNegativeButton("No", null)
+		        .show();
 			}
 		});
 
@@ -127,20 +145,48 @@ public class SegnalaFragment extends Fragment {
 
 	}
 
+	private void updateObject() {
+		if(Parking.class.isInstance(obj))
+		{
+			((Parking)obj).setmSlotsOccupiedOnTotal(mPickerFree.getCurrent());
+			((Parking)obj).setmSlotsUnavailable(mPickerWork.getCurrent());
+		} else{
+
+			((Street)obj).setSlotsOccupiedOnFree(mPickerFree.getCurrent());
+			((Street)obj).setSlotsUnavailable(mPickerWork.getCurrent());
+			((Street)obj).setSlotsOccupiedOnPaying(mPickerPayment.getCurrent());
+			((Street)obj).setSlotsOccupiedOnTimed(mPickerTimed.getCurrent());
+		}
+	}
+
 	private class MyCLickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			mPickerFree.setCurrent(mValue1);
-			mPickerWork.setCurrent(mValue2);
-			mPickerPayment.setCurrent(mValue3);
-			mPickerTimed.setCurrent(mValue4);
+			new AlertDialog.Builder(getActivity())
+	        .setIcon(android.R.drawable.ic_delete)
+	        .setTitle("Reset")
+	        .setMessage("Stai per cancellare i dati... Continuare?")
+	        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
 
-			SharedPreferences prefs = getActivity().getSharedPreferences(
-					MY_PREFERENCES, Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.remove(obj.getId()).commit();
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+
+	            	mPickerFree.setCurrent(mValue1);
+	    			mPickerWork.setCurrent(mValue2);
+	    			mPickerPayment.setCurrent(mValue3);
+	    			mPickerTimed.setCurrent(mValue4);
+
+	    			SharedPreferences prefs = getActivity().getSharedPreferences(
+	    					MY_PREFERENCES, Context.MODE_PRIVATE);
+	    			SharedPreferences.Editor editor = prefs.edit();
+	    			editor.remove(obj.getId()).commit();
+	    			Toast.makeText(getActivity(), "Dati cancellati", Toast.LENGTH_LONG).show();
+	            }
+
+	        })
+	        .setNegativeButton("No", null)
+	        .show();			
 		}
 
 	}

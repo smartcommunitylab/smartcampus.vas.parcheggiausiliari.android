@@ -19,17 +19,19 @@
         <Button
             android:id="@+id/btnParking"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/btnParkings" />
+            android:text="@string/btnParkings"
+            style="?android:attr/borderlessButtonStyle" />
 
         <Button
             android:id="@+id/btnVie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/btnStreets" />
+            android:text="@string/btnStreets" 
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-import org.osmdroid.util.GeoPoint;
-
+import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.model.Parking;
 import smartcampus.vas.parcheggiausiliari.android.model.Street;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class AusiliariHelper {
 	private static Context mContext;
@@ -24,16 +26,9 @@ public class AusiliariHelper {
 		return (helper != null);
 	}
 
-	public static ArrayList<GeoPoint> Parks() {
-		ArrayList<GeoPoint> toRtn = new ArrayList<GeoPoint>();
-		toRtn.add(new GeoPoint(46.068654, 11.150679));
-		toRtn.add(new GeoPoint(46.069968, 11.150350));
-		toRtn.add(new GeoPoint(46.070765, 11.150815));
-		toRtn.add(new GeoPoint(46.070502, 11.151732));
-		toRtn.add(new GeoPoint(46.069911, 11.151480));
-		toRtn.add(new GeoPoint(46.069386, 11.151389));
-		toRtn.add(new GeoPoint(46.068686, 11.150823));
-		return toRtn;
+	public void sendData(BaseDT obj) {
+		SetDataTask ast = new SetDataTask();
+		ast.execute(obj);
 	}
 
 	public static ArrayList<String> getStorico() {
@@ -50,6 +45,41 @@ public class AusiliariHelper {
 			e.printStackTrace();
 		}
 		return toRtn;
+	}
+
+	private static class SetDataTask extends
+			AsyncTask<BaseDT, Void, Void> {
+		ProgressDialog pd;
+
+		@Override
+		protected Void doInBackground(BaseDT... params) {
+			if(Parking.class.isInstance(params[0]))
+			{
+				Log.d("DEBUG","Parcheggio");
+			} else {
+				Log.d("DEBUG","Via");
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			pd = new ProgressDialog(mContext);
+			pd.setTitle("Sending Data");
+			pd.setMessage("Attendere");
+			pd.show();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+
+			if (pd.isShowing())
+				pd.dismiss();
+		}
 	}
 
 	private static class GetStoricoTask extends

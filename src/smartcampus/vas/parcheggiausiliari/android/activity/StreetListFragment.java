@@ -4,16 +4,14 @@ import smartcampus.vas.parcheggiausiliari.android.R;
 import smartcampus.vas.parcheggiausiliari.android.activity.ParkListFragment.MySimpleArrayAdapter;
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class StreetListFragment extends Fragment {
 
@@ -47,7 +45,7 @@ public class StreetListFragment extends Fragment {
 								new DetailsFragment((BaseDT) list.getAdapter()
 										.getItem(arg2))).addToBackStack(null)
 						.commit();
-				Log.d("DEBUG", "Passed");
+				//Log.d("DEBUG", "Passed");
 			}
 		});
 		return rootView;

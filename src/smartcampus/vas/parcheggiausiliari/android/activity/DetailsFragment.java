@@ -21,7 +21,7 @@ public class DetailsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_prova, container,
+		View rootView = inflater.inflate(R.layout.fragment_details, container,
 				false);
 		ViewPager pager = (ViewPager) rootView.findViewById(R.id.pager);
 		tabs = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabs);
