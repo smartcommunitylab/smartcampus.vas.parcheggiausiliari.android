@@ -16,11 +16,11 @@ public class Street extends BaseDT {
 	 * parcheggi a pagamento totali/occupati
 	 */
 	private int slotsPaying;
+	private int slotsOccupiedOnPaying;
 	/**
 	 * coordinate per costruire la polyline
 	 */
 	private double[] coordinates;
-	private int slotsOccupiedOnPaying;
 	/**
 	 * parcheggi a disco orario totali/occupati
 	 */
