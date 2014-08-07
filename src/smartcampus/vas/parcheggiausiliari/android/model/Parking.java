@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Parking extends BaseDT {
 
-	private double[] mPosition;
+	private double[] position;
 	private int slotsTotal;
 	private int slotsOccupiedOnTotal;
 	private int slotsUnavailable;
@@ -16,7 +16,7 @@ public class Parking extends BaseDT {
 	}
 
 	public double[] getPosition() {
-		return mPosition;
+		return position;
 	}
 
 	public int getSlotsOccupiedOnTotal() {
@@ -38,7 +38,7 @@ public class Parking extends BaseDT {
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal) {
 		super(name, description, id);
-		this.mPosition = position;
+		this.position = position;
 		this.slotsTotal = slotsTotal;
 
 	}
@@ -46,7 +46,7 @@ public class Parking extends BaseDT {
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal,LastChange lastChange) {
 		super(name, description, id);
-		this.mPosition = position;
+		this.position = position;
 		this.slotsTotal = slotsTotal;
 		this.lastChange = lastChange;
 
