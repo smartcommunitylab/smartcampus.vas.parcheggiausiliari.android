@@ -1,5 +1,7 @@
 package smartcampus.vas.parcheggiausiliari.android.model;
 
+import org.osmdroid.bonuspack.overlays.Polyline;
+
 public class Street extends BaseDT {
 	/**
 	 * parcheggi gratuiti totali/occupati
@@ -14,7 +16,18 @@ public class Street extends BaseDT {
 	 * parcheggi a pagamento totali/occupati
 	 */
 	private int slotsPaying;
-
+	/**
+	 * coordinate per costruire la polyline
+	 */
+	private double[] coordinates;
+	private int slotsOccupiedOnPaying;
+	/**
+	 * parcheggi a disco orario totali/occupati
+	 */
+	private int slotsTimed;
+	private int slotsOccupiedOnTimed;
+	
+	
 	public int getSlotsOccupiedOnFree() {
 		return slotsOccupiedOnFree;
 	}
@@ -44,19 +57,15 @@ public class Street extends BaseDT {
 	}
 
 	public Street(String name, String description, String id, int slotsFree,
-			int slotsPaying, int slotsTimed) {
+			int slotsPaying, int slotsTimed, double[] coords) {
 		super(name, description, id);
 		this.slotsFree = slotsFree;
 		this.slotsPaying = slotsPaying;
 		this.slotsTimed = slotsTimed;
+		this.coordinates = coords;
 	}
 
-	private int slotsOccupiedOnPaying;
-	/**
-	 * parcheggi a disco orario totali/occupati
-	 */
-	private int slotsTimed;
-	private int slotsOccupiedOnTimed;
+	
 
 	public int getSlotsFree() {
 		return slotsFree;
@@ -73,4 +82,9 @@ public class Street extends BaseDT {
 	public int getSlotsTimed() {
 		return slotsTimed;
 	}
+
+	public double[] getCoordinates() {
+		return coordinates;
+	}
+	
 }

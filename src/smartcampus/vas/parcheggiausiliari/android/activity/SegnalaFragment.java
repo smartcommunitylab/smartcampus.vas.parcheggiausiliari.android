@@ -189,10 +189,10 @@ public class SegnalaFragment extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 
-									mPickerFree.setCurrent(mValue1);
-									mPickerWork.setCurrent(mValue2);
-									mPickerPayment.setCurrent(mValue3);
-									mPickerTimed.setCurrent(mValue4);
+									mPickerFree.setCurrent(0);
+									mPickerWork.setCurrent(0);
+									mPickerPayment.setCurrent(0);
+									mPickerTimed.setCurrent(0);
 
 									SharedPreferences prefs = getActivity()
 											.getSharedPreferences(

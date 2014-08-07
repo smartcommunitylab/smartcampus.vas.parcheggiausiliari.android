@@ -92,7 +92,7 @@ public class AusiliariHelper {
 		protected ArrayList<String> doInBackground(Void... params) {
 			ArrayList<String> array = new ArrayList<String>();
 			for (int i = 0; i < 10; i++) {
-				array.add(i + " alle: " + new Date(System.currentTimeMillis()));
+				array.add(i + ":  14 / 07 / 2014 alle 17.16\n      da Mario Rossi");
 			}
 			return array;
 
@@ -156,11 +156,11 @@ public class AusiliariHelper {
 		protected Street[] doInBackground(Void... params) {
 			Street[] array = {
 					new Street("Via alla Cascata", "Via di prova", "v001", 10,
-							6, 8),
+							6, 8,null),
 					new Street("Via Sommarive", "Via di prova", "v002", 2, 18,
-							1),
+							1,null),
 					new Street("Via dei Valoni", "Via di prova", "v003", 0, 0,
-							3) };
+							3,null) };
 			return array;
 		}
 
