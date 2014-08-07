@@ -96,7 +96,7 @@ public class MapFragment extends Fragment {
 		center(new GeoPoint(pos.getLatitude(), pos.getLongitude()));
 		// map.addMarkerOnLongClick();
 
-		map.getOverlays().add(new LongPressOverlay(getActivity()) {
+		/*map.getOverlays().add(new LongPressOverlay(getActivity()) {
 			@Override
 			public void onLongPressGesture(MotionEvent event) {
 				Log.e("", "ASDF");
@@ -107,16 +107,16 @@ public class MapFragment extends Fragment {
 								new GeoPoint(point.getLatitudeE6(),
 										point.getLongitudeE6()),
 								getActivity()).get(0).getAddressLine(0) , Toast.LENGTH_LONG).show();
-				/*showPopup(
+				showPopup(
 						map,
 						"VIA",
 						OSMGeocoding
 								.FromPointToAddress(
 										new GeoPoint(point.getLatitudeE6(),
 												point.getLongitudeE6()),
-										getActivity()).get(0).getAddressLine(0));*/
+										getActivity()).get(0).getAddressLine(0));
 			}
-		});
+		});*/
 
 		ArrayList<ParkingMarker> items = new ArrayList<ParkingMarker>();
 		for (Parking mPark : new AusiliariHelper(getActivity()).getParklist()) {
@@ -168,6 +168,8 @@ public class MapFragment extends Fragment {
 		ArrayList<GeoPoint> list = new ArrayList<GeoPoint>();
 		list.add(new GeoPoint(new AusiliariHelper(getActivity()).getParklist()[0].getPosition()[0],new AusiliariHelper(getActivity()).getParklist()[0].getPosition()[1]));
 		list.add(new GeoPoint(46.07,11.15));
+		list.add(new GeoPoint(46.078,11.15));
+		list.add(new GeoPoint(46.07,11.154));
 		a.setPoints(list);
 		map.getOverlays().add(a);
 		

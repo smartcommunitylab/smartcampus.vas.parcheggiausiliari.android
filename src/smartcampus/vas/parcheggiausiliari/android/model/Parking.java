@@ -8,7 +8,7 @@ public class Parking extends BaseDT {
 	private int slotsTotal;
 	private int slotsOccupiedOnTotal;
 	private int slotsUnavailable;
-	private LastChange lastChange;
+	
 	
 	
 	public int getSlotsTotal() {
@@ -37,7 +37,7 @@ public class Parking extends BaseDT {
 
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal) {
-		super(name, description, id);
+		super(name, description, id, null);
 		this.position = position;
 		this.slotsTotal = slotsTotal;
 
@@ -45,34 +45,15 @@ public class Parking extends BaseDT {
 	
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal,LastChange lastChange) {
-		super(name, description, id);
+		super(name, description, id ,lastChange);
 		this.position = position;
 		this.slotsTotal = slotsTotal;
-		this.lastChange = lastChange;
 
 	}
 
 
 	
-	public LastChange getLastChange() {
-		return lastChange;
-	}
 
-	public class LastChange{
-		private String mAuthor;
-		private Date mTime;
-		public LastChange(String mAuthor, Date mTime) {
-			super();
-			this.mAuthor = mAuthor;
-			this.mTime = mTime;
-		}
-		public String getmAuthor() {
-			return mAuthor;
-		}
-		public Date getmTime() {
-			return mTime;
-		}
-		
-	}
+	
 	
 }

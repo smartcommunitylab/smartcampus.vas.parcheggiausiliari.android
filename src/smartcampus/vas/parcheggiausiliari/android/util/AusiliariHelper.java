@@ -156,11 +156,11 @@ public class AusiliariHelper {
 		protected Street[] doInBackground(Void... params) {
 			Street[] array = {
 					new Street("Via alla Cascata", "Via di prova", "v001", 10,
-							6, 8,null),
+							6, 8,null,null),
 					new Street("Via Sommarive", "Via di prova", "v002", 2, 18,
-							1,null),
+							1,null,null),
 					new Street("Via dei Valoni", "Via di prova", "v003", 0, 0,
-							3,null) };
+							3,null,null) };
 			return array;
 		}
 
