@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private int mCurrent = 0;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

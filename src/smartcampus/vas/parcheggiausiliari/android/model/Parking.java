@@ -5,14 +5,14 @@ import java.util.Date;
 public class Parking extends BaseDT {
 
 	private double[] mPosition;
-	private int mSlotsTotal;
-	private int mSlotsOccupiedOnTotal;
-	private int mSlotsUnavailable;
-	private LastChange mLastChange;
+	private int slotsTotal;
+	private int slotsOccupiedOnTotal;
+	private int slotsUnavailable;
+	private LastChange lastChange;
 	
 	
 	public int getSlotsTotal() {
-		return mSlotsTotal;
+		return slotsTotal;
 	}
 
 	public double[] getPosition() {
@@ -20,26 +20,26 @@ public class Parking extends BaseDT {
 	}
 
 	public int getSlotsOccupiedOnTotal() {
-		return mSlotsOccupiedOnTotal;
+		return slotsOccupiedOnTotal;
 	}
 
 	public void setSlotsOccupiedOnTotal(int mSlotsOccupiedOnTotal) {
-		this.mSlotsOccupiedOnTotal = mSlotsOccupiedOnTotal;
+		this.slotsOccupiedOnTotal = mSlotsOccupiedOnTotal;
 	}
 
 	public int getSlotsUnavailable() {
-		return mSlotsUnavailable;
+		return slotsUnavailable;
 	}
 
 	public void setSlotsUnavailable(int mSlotsUnavailable) {
-		this.mSlotsUnavailable = mSlotsUnavailable;
+		this.slotsUnavailable = mSlotsUnavailable;
 	}
 
 	public Parking(String name, String description, String id,
 			double[] position, int slotsTotal) {
 		super(name, description, id);
 		this.mPosition = position;
-		this.mSlotsTotal = slotsTotal;
+		this.slotsTotal = slotsTotal;
 
 	}
 	
@@ -47,15 +47,15 @@ public class Parking extends BaseDT {
 			double[] position, int slotsTotal,LastChange lastChange) {
 		super(name, description, id);
 		this.mPosition = position;
-		this.mSlotsTotal = slotsTotal;
-		this.mLastChange = lastChange;
+		this.slotsTotal = slotsTotal;
+		this.lastChange = lastChange;
 
 	}
 
 
 	
 	public LastChange getLastChange() {
-		return mLastChange;
+		return lastChange;
 	}
 
 	public class LastChange{
