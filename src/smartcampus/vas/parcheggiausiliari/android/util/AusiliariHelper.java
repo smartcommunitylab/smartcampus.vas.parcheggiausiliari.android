@@ -2,9 +2,11 @@ package smartcampus.vas.parcheggiausiliari.android.util;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
+import smartcampus.vas.parcheggiausiliari.android.model.LastChange;
 import smartcampus.vas.parcheggiausiliari.android.model.Parking;
 import smartcampus.vas.parcheggiausiliari.android.model.Street;
 import android.app.ProgressDialog;
@@ -29,8 +31,8 @@ public class AusiliariHelper {
 		ast.execute(obj);
 	}
 
-	public static ArrayList<String> getStorico() {
-		ArrayList<String> toRtn = new ArrayList<String>();
+	public static ArrayList<LastChange> getStorico() {
+		ArrayList<LastChange> toRtn = new ArrayList<LastChange>();
 		try {
 			GetStoricoTask ast = new GetStoricoTask();
 			ast.execute();
@@ -45,6 +47,22 @@ public class AusiliariHelper {
 		return toRtn;
 	}
 
+	public static ArrayList<LastChange> getStoricoAgente() {
+		ArrayList<LastChange> toRtn = new ArrayList<LastChange>();
+		try {
+			GetStoricoTask ast = new GetStoricoTask();
+			ast.execute();
+			toRtn = ast.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return toRtn;
+	}
+	
 	private static class SetDataTask extends
 			AsyncTask<BaseDT, Void, Void> {
 		ProgressDialog pd;
@@ -85,14 +103,15 @@ public class AusiliariHelper {
 	}
 
 	private static class GetStoricoTask extends
-			AsyncTask<Void, Void, ArrayList<String>> {
+			AsyncTask<Void, Void, ArrayList<LastChange>> {
 		ProgressDialog pd;
 
 		@Override
-		protected ArrayList<String> doInBackground(Void... params) {
-			ArrayList<String> array = new ArrayList<String>();
+		protected ArrayList<LastChange> doInBackground(Void... params) {
+			ArrayList<LastChange> array = new ArrayList<LastChange>();
+			int a = new Random().nextInt(90000000);
 			for (int i = 0; i < 10; i++) {
-				array.add(i + ":  14 / 07 / 2014 alle 17.16\n      da Mario Rossi");
+				array.add(new LastChange("Mario Rossi", new Date(System.currentTimeMillis()+ (i*a))));
 			}
 			return array;
 
@@ -108,7 +127,7 @@ public class AusiliariHelper {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<String> result) {
+		protected void onPostExecute(ArrayList<LastChange> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
