@@ -57,7 +57,7 @@ public class Street extends BaseDT {
 	}
 
 	public Street(String name, String description, String id, int slotsFree,
-			int slotsPaying, int slotsTimed, double[] coords,LastChange lastChange) {
+			int slotsPaying, int slotsTimed, double[] coords,ParkingLog lastChange) {
 		super(name, description, id, lastChange);
 		this.slotsFree = slotsFree;
 		this.slotsPaying = slotsPaying;

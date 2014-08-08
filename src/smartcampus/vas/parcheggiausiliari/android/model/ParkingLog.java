@@ -2,10 +2,10 @@ package smartcampus.vas.parcheggiausiliari.android.model;
 
 import java.util.Date;
 
-public class LastChange{
+public class ParkingLog{
 	private String mAuthor;
 	private Date mTime;
-	public LastChange(String mAuthor, Date mTime) {
+	public ParkingLog(String mAuthor, Date mTime) {
 		super();
 		this.mAuthor = mAuthor;
 		this.mTime = mTime;

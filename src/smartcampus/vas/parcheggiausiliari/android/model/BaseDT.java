@@ -5,18 +5,18 @@ public class BaseDT {
 	private String mName;
 	private String mDescription;
 	private String mId;
-	private LastChange lastChange;
+	private ParkingLog lastChange;
 	
 	public String getName() {
 		return mName;
 	}
 	
 
-	public LastChange getLastChange() {
+	public ParkingLog getLastChange() {
 		return lastChange;
 	}
 
-	public BaseDT(String name, String description, String id, LastChange lastChange) {
+	public BaseDT(String name, String description, String id, ParkingLog lastChange) {
 		super();
 		this.mName = name;
 		this.mDescription = description;
