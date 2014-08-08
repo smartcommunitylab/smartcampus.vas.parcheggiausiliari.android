@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import smartcampus.vas.parcheggiausiliari.android.R;
-import smartcampus.vas.parcheggiausiliari.android.model.LastChange;
+import smartcampus.vas.parcheggiausiliari.android.model.ParkingLog;
 import smartcampus.vas.parcheggiausiliari.android.util.AusiliariHelper;
 import android.content.Context;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class StoricoFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onStart();
 		ArrayList<String> result = new ArrayList<String>();
-		for (LastChange lc : new AusiliariHelper(getActivity()).getStorico()) {
+		for (ParkingLog lc : new AusiliariHelper(getActivity()).getStorico()) {
 			result.add("da "+lc.getAuthor()+" il " +lc.getTime());
 		}
 		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(getActivity(), result);

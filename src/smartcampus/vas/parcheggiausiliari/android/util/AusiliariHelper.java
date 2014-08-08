@@ -6,8 +6,8 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import smartcampus.vas.parcheggiausiliari.android.model.BaseDT;
-import smartcampus.vas.parcheggiausiliari.android.model.LastChange;
 import smartcampus.vas.parcheggiausiliari.android.model.Parking;
+import smartcampus.vas.parcheggiausiliari.android.model.ParkingLog;
 import smartcampus.vas.parcheggiausiliari.android.model.Street;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,8 +31,8 @@ public class AusiliariHelper {
 		ast.execute(obj);
 	}
 
-	public static ArrayList<LastChange> getStorico() {
-		ArrayList<LastChange> toRtn = new ArrayList<LastChange>();
+	public static ArrayList<ParkingLog> getStorico() {
+		ArrayList<ParkingLog> toRtn = new ArrayList<ParkingLog>();
 		try {
 			GetStoricoTask ast = new GetStoricoTask();
 			ast.execute();
@@ -47,8 +47,8 @@ public class AusiliariHelper {
 		return toRtn;
 	}
 
-	public static ArrayList<LastChange> getStoricoAgente() {
-		ArrayList<LastChange> toRtn = new ArrayList<LastChange>();
+	public static ArrayList<ParkingLog> getStoricoAgente() {
+		ArrayList<ParkingLog> toRtn = new ArrayList<ParkingLog>();
 		try {
 			GetStoricoTask ast = new GetStoricoTask();
 			ast.execute();
@@ -103,15 +103,15 @@ public class AusiliariHelper {
 	}
 
 	private static class GetStoricoTask extends
-			AsyncTask<Void, Void, ArrayList<LastChange>> {
+			AsyncTask<Void, Void, ArrayList<ParkingLog>> {
 		ProgressDialog pd;
 
 		@Override
-		protected ArrayList<LastChange> doInBackground(Void... params) {
-			ArrayList<LastChange> array = new ArrayList<LastChange>();
+		protected ArrayList<ParkingLog> doInBackground(Void... params) {
+			ArrayList<ParkingLog> array = new ArrayList<ParkingLog>();
 			int a = new Random().nextInt(90000000);
 			for (int i = 0; i < 10; i++) {
-				array.add(new LastChange("Mario Rossi", new Date(System.currentTimeMillis()+ (i*a))));
+				array.add(new ParkingLog("Mario Rossi", new Date(System.currentTimeMillis()+ (i*a))));
 			}
 			return array;
 
@@ -127,7 +127,7 @@ public class AusiliariHelper {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<LastChange> result) {
+		protected void onPostExecute(ArrayList<ParkingLog> result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 

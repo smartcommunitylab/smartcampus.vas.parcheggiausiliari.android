@@ -44,7 +44,7 @@ public class Parking extends BaseDT {
 	}
 	
 	public Parking(String name, String description, String id,
-			double[] position, int slotsTotal,LastChange lastChange) {
+			double[] position, int slotsTotal,ParkingLog lastChange) {
 		super(name, description, id ,lastChange);
 		this.position = position;
 		this.slotsTotal = slotsTotal;
